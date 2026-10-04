@@ -66,7 +66,7 @@
 </head>
 <body class="bg-[#0b0f19] text-slate-200 antialiased selection:bg-blue-600 selection:text-white font-sans min-h-screen flex flex-col justify-between overflow-x-hidden">
 
-  <!-- NAVBAR CON PESTAÑAS (INCLUYE MIS PEDIDOS Y CARRITO) -->
+  <!-- NAVBAR LIMPIO (PESTAÑAS PRINCIPALES) -->
   <nav class="fixed top-0 w-full z-40 bg-[#0b0f19]/90 border-b border-slate-800 backdrop-blur-md">
     <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
       <div class="flex items-center gap-2.5 cursor-pointer" onclick="cambiarVista('inicio')">
@@ -78,39 +78,42 @@
         <span class="text-xl font-bold tracking-tight text-white">Nexus<span class="text-blue-400">Studio</span></span>
       </div>
 
-      <!-- Links de Pestañas -->
+      <!-- Links de Pestañas Limpias -->
       <div class="hidden md:flex items-center gap-1.5 text-sm font-medium bg-slate-900/80 p-1.5 rounded-2xl border border-slate-800">
-        <button onclick="cambiarVista('inicio')" id="nav-inicio" class="nav-tab-btn px-3.5 py-1.5 rounded-xl text-white bg-blue-600/30 border border-blue-500/40 transition">Inicio</button>
-        <button onclick="cambiarVista('precios')" id="nav-precios" class="nav-tab-btn px-3.5 py-1.5 rounded-xl text-slate-400 hover:text-white transition">Precios</button>
-        <button onclick="cambiarVista('ejemplos')" id="nav-ejemplos" class="nav-tab-btn px-3.5 py-1.5 rounded-xl text-slate-400 hover:text-white transition">Ejemplos</button>
-        <button onclick="cambiarVista('opiniones')" id="nav-opiniones" class="nav-tab-btn px-3.5 py-1.5 rounded-xl text-slate-400 hover:text-white transition">Opiniones</button>
-        <button onclick="cambiarVista('pedidos')" id="nav-pedidos" class="nav-tab-btn px-3.5 py-1.5 rounded-xl text-slate-400 hover:text-white transition flex items-center gap-1.5">
-          <i data-lucide="search" class="w-3.5 h-3.5 text-cyan-400"></i>
-          <span>Rastrear Orden</span>
-        </button>
-        <button onclick="cambiarVista('garantia')" id="nav-garantia" class="nav-tab-btn px-3.5 py-1.5 rounded-xl text-slate-400 hover:text-white transition">Garantía</button>
+        <button onclick="cambiarVista('inicio')" id="nav-inicio" class="nav-tab-btn px-4 py-1.5 rounded-xl text-white bg-blue-600/30 border border-blue-500/40 transition">Inicio</button>
+        <button onclick="cambiarVista('precios')" id="nav-precios" class="nav-tab-btn px-4 py-1.5 rounded-xl text-slate-400 hover:text-white transition">Precios</button>
+        <button onclick="cambiarVista('ejemplos')" id="nav-ejemplos" class="nav-tab-btn px-4 py-1.5 rounded-xl text-slate-400 hover:text-white transition">Ejemplos</button>
+        <button onclick="cambiarVista('opiniones')" id="nav-opiniones" class="nav-tab-btn px-4 py-1.5 rounded-xl text-slate-400 hover:text-white transition">Opiniones</button>
+        <button onclick="cambiarVista('garantia')" id="nav-garantia" class="nav-tab-btn px-4 py-1.5 rounded-xl text-slate-400 hover:text-white transition">Garantía</button>
       </div>
 
-      <div class="flex items-center gap-3">
+      <!-- ACCIONES: CANDADO + MIS PEDIDOS + CARRITO + BOTÓN ORDENAR -->
+      <div class="flex items-center gap-2.5">
         <!-- Candado Dueño -->
-        <button onclick="abrirAdminModal()" title="Panel de Dueño" class="p-2 text-slate-500 hover:text-blue-400 hover:bg-slate-800/80 rounded-lg transition">
+        <button onclick="abrirAdminModal()" title="Panel de Dueño" class="p-2 text-slate-500 hover:text-blue-400 hover:bg-slate-800/80 rounded-xl transition">
           <i data-lucide="lock" class="w-4 h-4"></i>
         </button>
 
+        <!-- Botón Mis Pedidos (Nuevo) -->
+        <button onclick="abrirMisPedidosModal()" title="Mis Pedidos" class="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-300 hover:text-white bg-slate-800/90 hover:bg-slate-700 rounded-xl transition border border-slate-700">
+          <i data-lucide="package" class="w-4 h-4 text-cyan-400"></i>
+          <span class="hidden sm:inline">Mis Pedidos</span>
+        </button>
+
         <!-- Botón Carrito de Compras -->
-        <button onclick="abrirCarritoModal()" class="relative p-2 text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 rounded-xl transition border border-slate-700">
+        <button onclick="abrirCarritoModal()" title="Carrito de Compras" class="relative p-2 text-slate-300 hover:text-white bg-slate-800/90 hover:bg-slate-700 rounded-xl transition border border-slate-700">
           <i data-lucide="shopping-bag" class="w-4 h-4 text-cyan-400"></i>
           <span id="cart-badge" class="absolute -top-1.5 -right-1.5 w-5 h-5 bg-blue-600 text-white rounded-full text-[10px] font-bold flex items-center justify-center hidden">0</span>
         </button>
 
-        <button onclick="cambiarVista('precios')" class="px-4 py-2 text-xs md:text-sm font-semibold text-white bg-blue-600 hover:bg-blue-500 rounded-lg shadow-md shadow-blue-600/30 transition flex items-center gap-2">
+        <button onclick="cambiarVista('precios')" class="px-4 py-2 text-xs md:text-sm font-semibold text-white bg-blue-600 hover:bg-blue-500 rounded-xl shadow-md shadow-blue-600/30 transition flex items-center gap-2">
           <span>Ordenar</span>
         </button>
       </div>
     </div>
   </nav>
 
-  <!-- CONTENEDOR PRINCIPAL DE VISTAS (SPA) -->
+  <!-- CONTENEDOR PRINCIPAL DE VISTAS (SPA LIMPIO) -->
   <main class="flex-1 max-w-6xl w-full mx-auto px-6 pt-28 pb-12 flex items-center justify-center">
 
     <!-- ========================================== -->
@@ -125,16 +128,16 @@
         Lleva tu negocio a internet con una web <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-indigo-400">rápida, moderna y vendedora.</span>
       </h1>
       <p class="text-slate-400 text-base md:text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
-        Adquiere tu paquete digital con tarifas promocionales. El pedido nos llega directo a Discord al instante, puedes rastrear tu orden en tiempo real y coordinamos fotos directo por WhatsApp.
+        Adquiere tu paquete digital con tarifas promocionales. El pedido nos llega directo a Discord al instante, puedes revisar el estado de tu orden en tiempo real y coordinar fotos por WhatsApp.
       </p>
       <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
         <button onclick="cambiarVista('precios')" class="w-full sm:w-auto px-8 py-3.5 text-sm font-bold text-white bg-blue-600 hover:bg-blue-500 rounded-xl shadow-lg shadow-blue-600/30 transition flex items-center justify-center gap-2 hover:scale-105 duration-200">
           <span>Ver Tarifas con Descuento</span>
           <i data-lucide="arrow-right" class="w-4 h-4"></i>
         </button>
-        <button onclick="cambiarVista('pedidos')" class="w-full sm:w-auto px-8 py-3.5 text-sm font-bold text-slate-300 bg-slate-800/80 hover:bg-slate-800 border border-slate-700 rounded-xl transition flex items-center justify-center gap-2 hover:border-slate-600 duration-200">
-          <i data-lucide="search" class="w-4 h-4 text-cyan-400"></i>
-          <span>Rastrear mi Orden</span>
+        <button onclick="abrirMisPedidosModal()" class="w-full sm:w-auto px-8 py-3.5 text-sm font-bold text-slate-300 bg-slate-800/80 hover:bg-slate-800 border border-slate-700 rounded-xl transition flex items-center justify-center gap-2 hover:border-slate-600 duration-200">
+          <i data-lucide="package" class="w-4 h-4 text-cyan-400"></i>
+          <span>Consultar Mis Pedidos</span>
         </button>
       </div>
     </section>
@@ -276,7 +279,7 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- 3. VISTA: EJEMPLOS -->
+    <!-- 3. VISTA: EJEMPLOS (CARRUSEL HORIZONTAL) -->
     <!-- ========================================== -->
     <section id="vista-ejemplos" class="vista-seccion hidden w-full py-6 animate-fade-view">
       <div class="text-center mb-8">
@@ -334,33 +337,7 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- 5. VISTA: RASTREAR PEDIDOS (ESTADOS EN VIVO) -->
-    <!-- ========================================== -->
-    <section id="vista-pedidos" class="vista-seccion hidden w-full max-w-2xl mx-auto py-6 animate-fade-view">
-      <div class="text-center mb-8">
-        <h2 class="text-3xl font-extrabold text-white">Rastreo de Pedidos</h2>
-        <p class="text-slate-400 text-xs mt-1">Ingresa tu Order ID (ej: ORD-8421) o tu número de WhatsApp para ver el estado en tiempo real.</p>
-      </div>
-
-      <!-- Buscador de Orden -->
-      <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-xl mb-6">
-        <form onsubmit="buscarOrdenCliente(event)" class="flex flex-col sm:flex-row gap-3">
-          <input type="text" id="track-search-input" placeholder="Ingresa tu Order ID o WhatsApp..." required class="flex-1 bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:border-blue-500 focus:outline-none">
-          <button type="submit" class="px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition shadow-lg shadow-blue-600/30">
-            <i data-lucide="search" class="w-4 h-4"></i>
-            <span>Consultar Estado</span>
-          </button>
-        </form>
-      </div>
-
-      <!-- Resultado del Rastreo -->
-      <div id="track-result-container" class="hidden bg-slate-900/90 border border-slate-700/80 p-6 sm:p-8 rounded-3xl shadow-2xl relative">
-        <!-- Contenido generado por JS -->
-      </div>
-    </section>
-
-    <!-- ========================================== -->
-    <!-- 6. VISTA: GARANTÍA -->
+    <!-- 5. VISTA: GARANTÍA -->
     <!-- ========================================== -->
     <section id="vista-garantia" class="vista-seccion hidden w-full py-6 animate-fade-view">
       <div class="text-center mb-10">
@@ -403,6 +380,42 @@
   </footer>
 
   <!-- ========================================== -->
+  <!-- MODAL: MIS PEDIDOS & RASTREADOR DE ORDEN (NUEVO) -->
+  <!-- ========================================== -->
+  <div id="mis-pedidos-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700 w-full max-w-xl rounded-3xl p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto admin-scrollbar">
+      <button onclick="cerrarMisPedidosModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="flex items-center gap-2.5 mb-6">
+        <div class="w-9 h-9 rounded-xl bg-blue-600/30 text-blue-400 flex items-center justify-center">
+          <i data-lucide="package" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-white">Mis Pedidos & Rastreo</h3>
+          <p class="text-xs text-slate-400">Consulta el estado en vivo de tu proyecto web.</p>
+        </div>
+      </div>
+
+      <!-- Buscador manual con Order ID -->
+      <div class="bg-slate-800/60 p-3 rounded-2xl border border-slate-700/80 mb-6">
+        <form onsubmit="buscarOrdenManual(event)" class="flex gap-2">
+          <input type="text" id="track-manual-input" placeholder="Buscar por Order ID (ej: ORD-4016)..." required class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-white text-xs focus:border-blue-500 focus:outline-none">
+          <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl text-xs transition">
+            Rastrear
+          </button>
+        </form>
+      </div>
+
+      <!-- Lista de pedidos del usuario -->
+      <div id="mis-pedidos-lista" class="space-y-4">
+        <!-- Generado por JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
   <!-- MODAL: CARRITO DE COMPRAS -->
   <!-- ========================================== -->
   <div id="cart-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
@@ -418,12 +431,8 @@
         <h3 class="text-xl font-bold text-white">Tu Carrito de Compra</h3>
       </div>
 
-      <!-- Lista de Items en el carrito -->
-      <div id="cart-items-container" class="space-y-3 max-h-60 overflow-y-auto chat-scrollbar mb-6">
-        <!-- Render dinámico -->
-      </div>
+      <div id="cart-items-container" class="space-y-3 max-h-60 overflow-y-auto chat-scrollbar mb-6"></div>
 
-      <!-- Resumen Total -->
       <div class="border-t border-slate-800 pt-4 mb-6 flex items-center justify-between">
         <span class="text-xs text-slate-400 font-bold uppercase">Total Estimado:</span>
         <span id="cart-total-price" class="text-2xl font-black text-white">$0 USD</span>
@@ -608,7 +617,7 @@
               <i data-lucide="layers" class="w-4 h-4 text-cyan-400"></i>
               <span>Gestión de Pedidos & Estados en Vivo</span>
             </h4>
-            <span class="text-[11px] text-slate-400">Al cambiar el estado se actualiza en el rastreo del cliente y en Discord</span>
+            <span class="text-[11px] text-slate-400">Al cambiar el estado se actualiza en "Mis Pedidos" del cliente y en Discord</span>
           </div>
           <div id="admin-orders-list" class="space-y-4">
             <!-- Render dinámico -->
@@ -692,21 +701,20 @@
     </div>
   </div>
 
-  <!-- SCRIPT PRINCIPAL COMPLETO CON SISTEMA DE CARRITO Y RASTREO -->
+  <!-- SCRIPT PRINCIPAL COMPLETO CON CONTROL DE MIS PEDIDOS Y RASTREO -->
   <script>
     lucide.createIcons();
 
     const ADMIN_PASS = "nexus2026";
     const NEXUS_AVATAR = "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=128&q=80";
 
-    // WEBHOOKS DEFINIDOS
     const WEBHOOK_ORDERS_DEFAULT = "https://discord.com/api/webhooks/1556375687252680714/4tKdekZqOJD1EBE_JUCsZgo8ANDj8nv7bxHKzvwKLNlMoCasatTQ1QnKVFQ1HgT9dOOK";
     const WEBHOOK_REVIEWS_DEFAULT = "https://discord.com/api/webhooks/1556375695901331668/PeFlt58w70MgNjoCpQiB_zCx6J6Y4ETd6Kur9iRfyRcArF7Dv0bkRR5peP2pD6EW9VyW";
 
     let webhookOrders = WEBHOOK_ORDERS_DEFAULT;
     let webhookReviews = WEBHOOK_REVIEWS_DEFAULT;
 
-    // 1. SISTEMA SPA: CONTROLADOR DE VISTAS
+    // 1. CONTROLADOR DE VISTAS
     function cambiarVista(nombreVista) {
       document.querySelectorAll('.vista-seccion').forEach(sec => sec.classList.add('hidden'));
       const target = document.getElementById(`vista-${nombreVista}`);
@@ -726,7 +734,102 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // 2. SISTEMA DE CARRITO DE COMPRAS
+    // 2. SISTEMA DE MIS PEDIDOS (MODAL)
+    let orders = JSON.parse(localStorage.getItem('nexus_orders')) || [];
+
+    function abrirMisPedidosModal() {
+      renderMisPedidos();
+      document.getElementById('mis-pedidos-modal').classList.remove('hidden');
+    }
+    function cerrarMisPedidosModal() {
+      document.getElementById('mis-pedidos-modal').classList.add('hidden');
+    }
+
+    function renderMisPedidos(filtro = null) {
+      const container = document.getElementById('mis-pedidos-lista');
+      let lista = filtro ? orders.filter(o => o.id.toLowerCase() === filtro.toLowerCase() || o.telefono.includes(filtro)) : orders;
+
+      if (lista.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-8">
+            <i data-lucide="package-x" class="w-10 h-10 text-slate-500 mx-auto mb-2"></i>
+            <h4 class="text-sm font-bold text-white mb-1">${filtro ? 'No se encontró ninguna orden con ese dato' : 'No tienes órdenes registradas'}</h4>
+            <p class="text-xs text-slate-400">Cuando compres un plan en la web, aquí verás el progreso de tu web en tiempo real.</p>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      container.innerHTML = lista.map(o => {
+        let paso = 1;
+        let colorPaso = "bg-amber-400";
+        if (o.estado.includes("En Proceso") || o.estado.includes("Desarrollo")) {
+          paso = 2;
+          colorPaso = "bg-cyan-400";
+        } else if (o.estado.includes("Terminado") || o.estado.includes("Entregado")) {
+          paso = 3;
+          colorPaso = "bg-emerald-400";
+        }
+
+        return `
+          <div class="bg-slate-800/60 border border-slate-700/80 p-5 rounded-2xl shadow-lg flex flex-col gap-3">
+            <div class="flex items-center justify-between border-b border-slate-700/60 pb-3">
+              <div>
+                <span class="text-[10px] text-slate-400 font-mono block">Order ID Oficial:</span>
+                <strong class="text-base font-black text-white font-mono tracking-wider">${o.id}</strong>
+              </div>
+              <span class="px-2.5 py-1 rounded-full text-[11px] font-bold ${                 o.estado.includes('Terminado') ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' :                 o.estado.includes('En Proceso') ? 'bg-cyan-950 text-cyan-400 border border-cyan-800' :                 'bg-amber-950 text-amber-400 border border-amber-800'               }">${o.estado}</span>
+            </div>
+
+            <!-- Barra de Progreso en Vivo -->
+            <div class="py-1">
+              <div class="flex justify-between text-[10px] font-bold text-slate-400 mb-1.5">
+                <span class="${paso >= 1 ? 'text-amber-400' : ''}">1. Recibido</span>
+                <span class="${paso >= 2 ? 'text-cyan-400' : ''}">2. En Desarrollo</span>
+                <span class="${paso >= 3 ? 'text-emerald-400' : ''}">3. Entregado</span>
+              </div>
+              <div class="w-full bg-slate-900 h-2 rounded-full overflow-hidden p-0.5 border border-slate-700/60">
+                <div class="${colorPaso} h-full rounded-full transition-all duration-500" style="width: ${paso === 1 ? '33%' : paso === 2 ? '66%' : '100%'}"></div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2 text-[11px] bg-slate-900/60 p-3 rounded-xl border border-slate-800">
+              <div>
+                <span class="text-slate-500 block">Plan:</span>
+                <strong class="text-blue-400">${o.plan}</strong>
+              </div>
+              <div>
+                <span class="text-slate-500 block">Negocio:</span>
+                <strong class="text-white">${o.negocio || "N/A"}</strong>
+              </div>
+              <div>
+                <span class="text-slate-500 block">Cliente:</span>
+                <span class="text-slate-200">${o.clienteReal || o.cliente}</span>
+              </div>
+              <div>
+                <span class="text-slate-500 block">Fecha:</span>
+                <span class="text-slate-400 font-mono">${o.fecha}</span>
+              </div>
+            </div>
+
+            <a href="https://wa.me/593984511517?text=Hola%20Nexus%20Studio,%20estoy%20consultando%20el%20estado%20de%20mi%20orden%20${o.id}" target="_blank" class="w-full py-2 bg-slate-900 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl text-center text-xs font-semibold border border-slate-700 transition flex items-center justify-center gap-1.5">
+              <i data-lucide="message-circle" class="w-3.5 h-3.5 text-emerald-400"></i>
+              <span>Consultar avance en WhatsApp</span>
+            </a>
+          </div>
+        `;
+      }).join('');
+      lucide.createIcons();
+    }
+
+    function buscarOrdenManual(e) {
+      e.preventDefault();
+      const val = document.getElementById('track-manual-input').value.trim();
+      renderMisPedidos(val);
+    }
+
+    // 3. CARRITO DE COMPRAS
     let cart = JSON.parse(localStorage.getItem('nexus_cart')) || [];
 
     function actualizarBadgeCarrito() {
@@ -818,7 +921,7 @@
       document.getElementById('checkout-modal').classList.remove('hidden');
     }
 
-    // 3. SLIDER HORIZONTAL DE EJEMPLOS
+    // 4. SLIDER HORIZONTAL
     const sliderData = [
       {
         titulo: "Barberías & Spas Deluxe",
@@ -875,7 +978,6 @@
     function renderSlider() {
       const item = sliderData[sliderIndex];
       const card = document.getElementById('slider-card');
-      
       card.classList.remove('animate-slideCard');
       void card.offsetWidth;
       card.classList.add('animate-slideCard');
@@ -898,7 +1000,7 @@
     }
     renderSlider();
 
-    // 4. REVIEWS
+    // 5. REVIEWS
     const DEFAULT_REVIEWS = [
       { text: "Me entregaron la web para mi local de comida en 24h. Los clientes ahora piden directo al WhatsApp.", tag: "Cliente Verificado • Plan Pro", date: "Oct 04, 2026", stars: 5 },
       { text: "Excelente servicio y paciencia para enseñarme a usar el catálogo. Súper recomendado Nexus Studio.", tag: "Cliente Verificado • Plan Starter", date: "Oct 03, 2026", stars: 5 },
@@ -906,7 +1008,6 @@
     ];
 
     let reviews = JSON.parse(localStorage.getItem('nexus_clean_reviews')) || DEFAULT_REVIEWS;
-    let orders = JSON.parse(localStorage.getItem('nexus_orders')) || [];
 
     function renderReviews() {
       const grid = document.getElementById('reviews-grid');
@@ -914,9 +1015,7 @@
         <div class="bg-[#0f1422]/90 border border-slate-800 p-5 rounded-2xl flex flex-col justify-between hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-500/10 transition duration-200 group">
           <div>
             <div class="flex items-center justify-between mb-3">
-              <div class="flex gap-1 text-amber-400 text-sm">
-                ${'★'.repeat(r.stars)}
-              </div>
+              <div class="flex gap-1 text-amber-400 text-sm">${'★'.repeat(r.stars)}</div>
               <span class="text-[11px] text-slate-400 font-mono">${r.date}</span>
             </div>
             <p class="text-xs text-slate-200 font-sans mb-4 leading-relaxed">${r.text}</p>
@@ -986,90 +1085,6 @@
       document.getElementById('public-review-text').value = '';
     }
 
-    // 5. SISTEMA DE RASTREO DE ÓRDENES (PARA EL CLIENTE)
-    function buscarOrdenCliente(e) {
-      e.preventDefault();
-      const busqueda = document.getElementById('track-search-input').value.trim().toLowerCase();
-      const resultado = orders.find(o => 
-        o.id.toLowerCase() === busqueda || 
-        o.telefono.replace(/[^0-9]/g, '').includes(busqueda.replace(/[^0-9]/g, ''))
-      );
-
-      const resBox = document.getElementById('track-result-container');
-      resBox.classList.remove('hidden');
-
-      if (!resultado) {
-        resBox.innerHTML = `
-          <div class="text-center py-6">
-            <i data-lucide="alert-circle" class="w-8 h-8 text-amber-400 mx-auto mb-2"></i>
-            <h4 class="text-base font-bold text-white mb-1">Orden no encontrada</h4>
-            <p class="text-xs text-slate-400">Verifica tu Order ID (ej: ORD-4016) o escríbenos directamente a WhatsApp.</p>
-          </div>
-        `;
-        lucide.createIcons();
-        return;
-      }
-
-      // Determinar paso de la barra de progreso
-      let paso = 1;
-      let colorPaso = "bg-amber-400";
-      if (resultado.estado.includes("En Proceso")) {
-        paso = 2;
-        colorPaso = "bg-cyan-400";
-      } else if (resultado.estado.includes("Terminado")) {
-        paso = 3;
-        colorPaso = "bg-emerald-400";
-      }
-
-      resBox.innerHTML = `
-        <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
-          <div>
-            <span class="text-xs text-slate-400 font-mono">Order ID Oficial:</span>
-            <h3 class="text-2xl font-black text-white font-mono tracking-wider">${resultado.id}</h3>
-          </div>
-          <span class="px-3 py-1 rounded-full text-xs font-bold ${             resultado.estado.includes('Terminado') ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' :             resultado.estado.includes('En Proceso') ? 'bg-cyan-950 text-cyan-400 border border-cyan-800' :             'bg-amber-950 text-amber-400 border border-amber-800'           }">${resultado.estado}</span>
-        </div>
-
-        <!-- Barra de Progreso Visual -->
-        <div class="mb-8">
-          <div class="flex justify-between text-[11px] font-bold text-slate-400 mb-2">
-            <span class="${paso >= 1 ? 'text-amber-400 font-bold' : ''}">1. Recibido</span>
-            <span class="${paso >= 2 ? 'text-cyan-400 font-bold' : ''}">2. En Desarrollo</span>
-            <span class="${paso >= 3 ? 'text-emerald-400 font-bold' : ''}">3. Entregado / Listo</span>
-          </div>
-          <div class="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden p-0.5">
-            <div class="${colorPaso} h-full rounded-full transition-all duration-500" style="width: ${paso === 1 ? '33%' : paso === 2 ? '66%' : '100%'}"></div>
-          </div>
-        </div>
-
-        <!-- Detalles de la orden -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs bg-slate-950/60 p-5 rounded-2xl border border-slate-800 mb-6">
-          <div>
-            <span class="text-slate-500 block mb-0.5">Cliente / Dueño:</span>
-            <strong class="text-white">${resultado.clienteReal || resultado.cliente}</strong>
-          </div>
-          <div>
-            <span class="text-slate-500 block mb-0.5">Negocio / Marca:</span>
-            <strong class="text-white">${resultado.negocio || "N/A"}</strong>
-          </div>
-          <div>
-            <span class="text-slate-500 block mb-0.5">Paquete Contratado:</span>
-            <strong class="text-blue-400">${resultado.plan}</strong>
-          </div>
-          <div>
-            <span class="text-slate-500 block mb-0.5">Fecha de Registro:</span>
-            <span class="text-slate-300 font-mono">${resultado.fecha}</span>
-          </div>
-        </div>
-
-        <a href="https://wa.me/593984511517?text=Hola%20Nexus%20Studio,%20estoy%20consultando%20el%20estado%20de%20mi%20orden%20${resultado.id}" target="_blank" class="w-full py-3 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 border border-slate-700 transition">
-          <i data-lucide="message-circle" class="w-4 h-4 text-emerald-400"></i>
-          <span>Coordinar detalles de este pedido en WhatsApp</span>
-        </a>
-      `;
-      lucide.createIcons();
-    }
-
     // 6. CHECKOUT Y ENVÍO A DISCORD
     function cerrarCheckoutModal() {
       document.getElementById('checkout-modal').classList.add('hidden');
@@ -1104,12 +1119,12 @@
       orders.unshift(nuevoPedido);
       localStorage.setItem('nexus_orders', JSON.stringify(orders));
 
-      // Vaciar carrito tras comprar
+      // Vaciar carrito
       cart = [];
       localStorage.removeItem('nexus_cart');
       actualizarBadgeCarrito();
 
-      // Disparo instantáneo al Webhook de Pedidos en Discord
+      // Enviar a Discord
       fetch(webhookOrders, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1144,7 +1159,7 @@
                 },
                 {
                   type: 2,
-                  label: "Rastrear en la Web",
+                  label: "Abrir Web Oficial",
                   style: 5,
                   url: window.location.href
                 }
@@ -1154,7 +1169,7 @@
         })
       }).catch(err => console.error("Error enviando webhook:", err));
 
-      alert(`¡Orden ${nuevoPedido.id} registrada con éxito! Tu Order ID es: ${nuevoPedido.id}. Puedes usarlo para rastrear el progreso.`);
+      alert(`¡Orden ${nuevoPedido.id} registrada con éxito! Tu Order ID es: ${nuevoPedido.id}. Puedes ver el avance en "Mis Pedidos".`);
       const mensajeWA = encodeURIComponent(`Hola Nexus Studio, acabo de registrar la orden ${nuevoPedido.id} para ${negocio} (${plan}). Mi nombre es ${clienteReal}.`);
       window.open(`https://wa.me/593984511517?text=${mensajeWA}`, '_blank');
 
@@ -1211,7 +1226,6 @@
               <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold ${
                 o.estado.includes('Terminado') ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' :
                 o.estado.includes('En Proceso') ? 'bg-cyan-950 text-cyan-400 border border-cyan-800' :
-                o.estado.includes('Cancelado') ? 'bg-rose-950 text-rose-400 border border-rose-800' :
                 'bg-amber-950 text-amber-400 border border-amber-800'
               }">${o.estado}</span>
             </div>
@@ -1226,11 +1240,10 @@
           </p>
 
           <div class="flex flex-wrap items-center gap-2 pt-1">
-            <span class="text-[11px] text-slate-400 font-semibold">Cambiar Estado (Notifica al Cliente):</span>
+            <span class="text-[11px] text-slate-400 font-semibold">Cambiar Estado (Sincroniza con el Cliente):</span>
             <button onclick="cambiarEstadoPedido(${idx}, '🟡 Recibido')" class="px-2.5 py-1 bg-amber-900/40 hover:bg-amber-700 text-amber-300 rounded-lg text-[10px] font-bold transition">🟡 Recibido</button>
             <button onclick="cambiarEstadoPedido(${idx}, '🔵 En Proceso')" class="px-2.5 py-1 bg-cyan-900/40 hover:bg-cyan-700 text-cyan-300 rounded-lg text-[10px] font-bold transition">🔵 En Proceso</button>
             <button onclick="cambiarEstadoPedido(${idx}, '🟢 Terminado')" class="px-2.5 py-1 bg-emerald-900/40 hover:bg-emerald-700 text-emerald-300 rounded-lg text-[10px] font-bold transition">🟢 Terminado</button>
-            <button onclick="cambiarEstadoPedido(${idx}, '⚪ Cancelado')" class="px-2.5 py-1 bg-rose-900/40 hover:bg-rose-700 text-rose-300 rounded-lg text-[10px] font-bold transition">⚪ Cancelado</button>
           </div>
         </div>
       `).join('');
@@ -1242,7 +1255,7 @@
       localStorage.setItem('nexus_orders', JSON.stringify(orders));
       renderAdminOrders();
 
-      // Notificar a Discord sobre la actualización
+      // Notificar a Discord
       fetch(webhookOrders, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1259,7 +1272,7 @@
               { name: "📦 Paquete", value: orders[index].plan, inline: true },
               { name: "📌 Nuevo Estado", value: `**${nuevoEstado}**`, inline: true }
             ],
-            footer: { text: "Nexus Studio • Panel de Gestión en Vivo" }
+            footer: { text: "Nexus Studio • Sincronización en Vivo" }
           }],
           components: [
             {
@@ -1276,12 +1289,6 @@
           ]
         })
       }).catch(e => console.error(e));
-
-      // Si el cliente tenía abierta la vista de rastreo, recargarla
-      const searchVal = document.getElementById('track-search-input')?.value;
-      if (searchVal) {
-        buscarOrdenCliente(new Event('submit'));
-      }
     }
 
     // 8. BOT DE SOPORTE
@@ -1297,7 +1304,7 @@
 
     const botRespuestas = {
       tiempo: "¡Super rápido! Las páginas se entregan en **24 a 48 horas** una vez recibidas tus fotos e información básica.",
-      rastreo: "Puedes ir a la pestaña **'Rastrear Orden'** arriba en el menú e introducir tu Order ID o tu número de teléfono para ver si tu web está en desarrollo o lista.",
+      rastreo: "Puedes tocar el botón **'Mis Pedidos'** (al lado del carrito en la barra superior) para ver tu Order ID y si tu web está en desarrollo o lista.",
       pagos: "Aceptamos transferencias bancarias a **Banco Pichincha** y **Banco Guayaquil**, o criptomonedas (**LTC** / **USDT**). No manejamos efectivo. Trabajamos con **50% de anticipo** para iniciar y 50% al entregar la web lista."
     };
 
