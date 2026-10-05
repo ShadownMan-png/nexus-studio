@@ -3,1698 +3,475 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nexus Studio | Soluciones Web & Automatizaciones</title>
-  <!-- Tailwind CSS por CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Iconos Lucide -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              500: '#3b82f6',
-              600: '#2563eb',
-              accent: '#06b6d4',
-              discord: '#5865F2'
-            }
-          },
-          animation: {
-            'fade-view': 'fadeView 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-            'slide-card': 'slideCard 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-            'pulse-subtle': 'pulseSubtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-            'bounce-chat': 'bounceChat 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
-          },
-          keyframes: {
-            fadeView: {
-              '0%': { opacity: 0, transform: 'translateY(12px) scale(0.99)' },
-              '100%': { opacity: 1, transform: 'translateY(0) scale(1)' },
-            },
-            slideCard: {
-              '0%': { opacity: 0, transform: 'translateX(30px) scale(0.96)' },
-              '100%': { opacity: 1, transform: 'translateX(0) scale(1)' },
-            },
-            pulseSubtle: {
-              '0%, 100%': { opacity: 1 },
-              '50%': { opacity: 0.75 },
-            },
-            bounceChat: {
-              '0%': { opacity: 0, transform: 'scale(0.9) translateY(8px)' },
-              '100%': { opacity: 1, transform: 'scale(1) translateY(0)' },
-            }
-          }
-        }
-      }
-    }
-  </script>
+  <title>Nexus Studio | Desarrollo Web & Bots</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
-    .chat-scrollbar::-webkit-scrollbar, .admin-scrollbar::-webkit-scrollbar {
-      width: 5px;
+    :root {
+      --bg: #07090e;
+      --card-bg: rgba(14, 20, 34, 0.85);
+      --border: rgba(0, 229, 255, 0.2);
+      --border-hover: #00e5ff;
+      --primary: #00e5ff;
+      --primary-glow: rgba(0, 229, 255, 0.35);
+      --text: #f0f4f8;
+      --text-muted: #8b9bb4;
+      --accent: #3b82f6;
     }
-    .chat-scrollbar::-webkit-scrollbar-track, .admin-scrollbar::-webkit-scrollbar-track {
-      background: rgba(15, 23, 42, 0.5);
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-    .chat-scrollbar::-webkit-scrollbar-thumb, .admin-scrollbar::-webkit-scrollbar-thumb {
-      background: #334155;
-      border-radius: 9999px;
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      line-height: 1.6;
     }
-    .pixel-font {
-      font-family: 'Courier New', Courier, monospace;
+
+    h1, h2, h3, .brand {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+    }
+
+    /* HEADER & NAV */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 2rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(7, 9, 14, 0.8);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      font-size: 1.4rem;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .brand span {
+      color: var(--primary);
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      margin-left: 1.5rem;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--primary);
+    }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 5rem 1.5rem 3rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.3rem 1rem;
+      background: rgba(0, 229, 255, 0.1);
+      border: 1px solid var(--border);
+      color: var(--primary);
+      border-radius: 50px;
+      font-size: 0.85rem;
+      margin-bottom: 1.5rem;
+      letter-spacing: 1px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      line-height: 1.1;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(90deg, #00e5ff, #3b82f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      color: var(--text-muted);
+      font-size: 1.15rem;
+      max-width: 650px;
+      margin: 0 auto 2rem;
+    }
+
+    /* PRICING GRID */
+    .pricing-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-title h2 {
+      font-size: 2rem;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: var(--border-hover);
+      box-shadow: 0 10px 30px var(--primary-glow);
+    }
+
+    .card.featured {
+      border-color: var(--primary);
+      background: linear-gradient(180deg, rgba(0, 229, 255, 0.08) 0%, var(--card-bg) 100%);
+    }
+
+    .card-tag {
+      position: absolute;
+      top: -12px;
+      right: 20px;
+      background: var(--primary);
+      color: #000;
+      font-weight: 700;
+      font-size: 0.75rem;
+      padding: 0.2rem 0.8rem;
+      border-radius: 20px;
+      text-transform: uppercase;
+    }
+
+    .price-box {
+      margin: 1.5rem 0;
+    }
+
+    .price {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .price sub {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .features {
+      list-style: none;
+      margin: 1.5rem 0 2rem;
+    }
+
+    .features li {
+      margin-bottom: 0.8rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .features li strong {
+      color: #fff;
+    }
+
+    .features li::before {
+      content: "✓";
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 0.85rem;
+      background: var(--primary);
+      color: #000;
+      font-weight: 700;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, opacity 0.2s;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--primary);
+      border: 1px solid var(--border);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--primary);
+      background: rgba(0, 229, 255, 0.05);
+    }
+
+    /* PAYMENT METHODS SECTION */
+    .payments-section {
+      max-width: 900px;
+      margin: 4rem auto;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+    }
+
+    .payments-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.2rem;
+      margin-top: 1.5rem;
+    }
+
+    .pay-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .pay-card span.icon {
+      font-size: 1.8rem;
+    }
+
+    .pay-card h4 {
+      color: #fff;
+      font-size: 0.95rem;
+    }
+
+    .pay-card p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* BOTON FLOTANTE DE IA ASISTENTE */
+    .ai-assist-btn {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: linear-gradient(135deg, #00e5ff, #3b82f6);
+      color: #000;
+      font-weight: 700;
+      padding: 0.85rem 1.4rem;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      box-shadow: 0 6px 25px rgba(0, 229, 255, 0.4);
+      cursor: pointer;
+      text-decoration: none;
+      z-index: 999;
+      transition: transform 0.2s;
+    }
+
+    .ai-assist-btn:hover {
+      transform: scale(1.05);
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 2.5rem 1rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
     }
   </style>
 </head>
-<body class="bg-[#0b0f19] text-slate-200 antialiased selection:bg-blue-600 selection:text-white font-sans min-h-screen flex flex-col justify-between overflow-x-hidden">
+<body>
 
-  <!-- NAVBAR CON RESPONSIVE TOTAL PARA CELULARES -->
-  <nav class="fixed top-0 w-full z-40 bg-[#0b0f19]/95 border-b border-slate-800 backdrop-blur-md">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-      
-      <!-- LOGO -->
-      <div class="flex items-center gap-2.5 cursor-pointer" onclick="cambiarVista('inicio')">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-400 p-[1.5px] shadow-lg shadow-blue-500/20">
-          <div class="w-full h-full bg-[#0b0f19] rounded-[10px] flex items-center justify-center font-black text-cyan-400 text-lg">
-            N
-          </div>
-        </div>
-        <span class="text-xl font-bold tracking-tight text-white">Nexus<span class="text-blue-400">Studio</span></span>
-      </div>
+  <!-- HEADER -->
+  <header>
+    <div class="brand">
+      <span>⚡</span> NEXUS STUDIO
+    </div>
+    <nav>
+      <a href="#planes">Planes</a>
+      <a href="#pagos">Métodos de Pago</a>
+      <a href="https://discord.gg/nexus-studio" target="_blank">Discord</a>
+    </nav>
+  </header>
 
-      <!-- Links en PC (Desktop) -->
-      <div class="hidden md:flex items-center gap-1.5 text-sm font-medium bg-slate-900/80 p-1.5 rounded-2xl border border-slate-800">
-        <button onclick="cambiarVista('inicio')" id="nav-inicio" class="nav-tab-btn px-4 py-1.5 rounded-xl text-white bg-blue-600/30 border border-blue-500/40 transition" data-i18n="nav_inicio">Inicio</button>
-        <button onclick="cambiarVista('precios')" id="nav-precios" class="nav-tab-btn px-4 py-1.5 rounded-xl text-slate-400 hover:text-white transition" data-i18n="nav_precios">Precios</button>
-        <button onclick="cambiarVista('ejemplos')" id="nav-ejemplos" class="nav-tab-btn px-4 py-1.5 rounded-xl text-slate-400 hover:text-white transition" data-i18n="nav_ejemplos">Ejemplos</button>
-        <button onclick="cambiarVista('opiniones')" id="nav-opiniones" class="nav-tab-btn px-4 py-1.5 rounded-xl text-slate-400 hover:text-white transition" data-i18n="nav_opiniones">Opiniones</button>
-        <button onclick="cambiarVista('garantia')" id="nav-garantia" class="nav-tab-btn px-4 py-1.5 rounded-xl text-slate-400 hover:text-white transition" data-i18n="nav_garantia">Garantía</button>
-      </div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="badge">ESTUDIO DE DESARROLLO DIGITAL</div>
+    <h1>Desarrollo Web Moderno & <span>Bots a Medida</span></h1>
+    <p>Creamos landing pages de alto impacto, tiendas con conexión a Discord y bots de automatización para creadores y empresas.</p>
+  </section>
 
-      <!-- Acciones de Cabecera -->
-      <div class="flex items-center gap-1.5 sm:gap-2">
-        
-        <!-- SELECTOR DE IDIOMA -->
-        <select id="lang-selector" onchange="cambiarIdiomaManual(this.value)" class="bg-slate-800/90 text-slate-200 border border-slate-700 rounded-xl px-2 py-1.5 text-[11px] font-bold focus:outline-none focus:border-blue-500 cursor-pointer">
-          <option value="es">🇪🇸 ES</option>
-          <option value="en">🇺🇸 EN</option>
-          <option value="pt">🇧🇷 PT</option>
-        </select>
-
-        <!-- Candado Dueño -->
-        <button onclick="abrirAdminModal()" title="Panel de Dueño" class="p-2 text-slate-500 hover:text-blue-400 hover:bg-slate-800/80 rounded-xl transition">
-          <i data-lucide="lock" class="w-4 h-4"></i>
-        </button>
-
-        <!-- Botón Mis Pedidos -->
-        <button onclick="abrirMisPedidosModal()" title="Mis Pedidos" class="flex items-center gap-1 px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-slate-300 hover:text-white bg-slate-800/90 hover:bg-slate-700 rounded-xl transition border border-slate-700">
-          <i data-lucide="package" class="w-4 h-4 text-cyan-400"></i>
-          <span class="hidden lg:inline" data-i18n="btn_mis_pedidos">Mis Pedidos</span>
-        </button>
-
-        <!-- Botón Carrito -->
-        <button onclick="abrirCarritoModal()" title="Carrito de Compras" class="relative p-2 text-slate-300 hover:text-white bg-slate-800/90 hover:bg-slate-700 rounded-xl transition border border-slate-700">
-          <i data-lucide="shopping-bag" class="w-4 h-4 text-cyan-400"></i>
-          <span id="cart-badge" class="absolute -top-1.5 -right-1.5 w-5 h-5 bg-blue-600 text-white rounded-full text-[10px] font-bold flex items-center justify-center hidden">0</span>
-        </button>
-
-        <!-- Botón Menú Hamburguesa en Celular -->
-        <button id="mobile-menu-btn" onclick="toggleMenuMovil()" class="md:hidden p-2 text-slate-300 hover:text-white bg-slate-800 rounded-xl border border-slate-700">
-          <i data-lucide="menu" id="mobile-menu-icon" class="w-5 h-5"></i>
-        </button>
-      </div>
+  <!-- PRICING / CATALOGO -->
+  <section class="pricing-section" id="planes">
+    <div class="section-title">
+      <h2>Catálogo de Servicios</h2>
+      <p style="color: var(--text-muted);">Sin mensualidades escondidas. Precios transparentes y entrega rápida.</p>
     </div>
 
-    <!-- MENÚ DESPLEGABLE MÓVIL (SOLUCIÓN PARA CELULARES) -->
-    <div id="mobile-menu-dropdown" class="hidden md:hidden bg-[#0d1322] border-b border-slate-800 px-4 py-4 space-y-2 shadow-2xl animate-fade-view">
-      <button onclick="cambiarVista('inicio'); toggleMenuMovil();" class="w-full text-left px-4 py-2.5 rounded-xl text-slate-200 hover:bg-slate-800 hover:text-blue-400 text-sm font-semibold flex items-center justify-between">
-        <span data-i18n="nav_inicio">Inicio</span>
-        <i data-lucide="home" class="w-4 h-4 text-slate-500"></i>
-      </button>
-      <button onclick="cambiarVista('precios'); toggleMenuMovil();" class="w-full text-left px-4 py-2.5 rounded-xl text-slate-200 hover:bg-slate-800 hover:text-blue-400 text-sm font-semibold flex items-center justify-between">
-        <span data-i18n="nav_precios">Precios y Tarifas</span>
-        <i data-lucide="tag" class="w-4 h-4 text-slate-500"></i>
-      </button>
-      <button onclick="cambiarVista('ejemplos'); toggleMenuMovil();" class="w-full text-left px-4 py-2.5 rounded-xl text-slate-200 hover:bg-slate-800 hover:text-blue-400 text-sm font-semibold flex items-center justify-between">
-        <span data-i18n="nav_ejemplos">Ejemplos de Webs</span>
-        <i data-lucide="layout" class="w-4 h-4 text-slate-500"></i>
-      </button>
-      <button onclick="cambiarVista('opiniones'); toggleMenuMovil();" class="w-full text-left px-4 py-2.5 rounded-xl text-slate-200 hover:bg-slate-800 hover:text-blue-400 text-sm font-semibold flex items-center justify-between">
-        <span data-i18n="nav_opiniones">Opiniones de Clientes</span>
-        <i data-lucide="star" class="w-4 h-4 text-slate-500"></i>
-      </button>
-      <button onclick="cambiarVista('garantia'); toggleMenuMovil();" class="w-full text-left px-4 py-2.5 rounded-xl text-slate-200 hover:bg-slate-800 hover:text-blue-400 text-sm font-semibold flex items-center justify-between">
-        <span data-i18n="nav_garantia">Garantía</span>
-        <i data-lucide="shield-check" class="w-4 h-4 text-slate-500"></i>
-      </button>
-      <button onclick="abrirMisPedidosModal(); toggleMenuMovil();" class="w-full text-left px-4 py-2.5 rounded-xl bg-blue-950/40 border border-blue-800/40 text-blue-300 text-sm font-semibold flex items-center justify-between">
-        <span data-i18n="btn_mis_pedidos">Mis Pedidos & Rastreo</span>
-        <i data-lucide="package" class="w-4 h-4 text-cyan-400"></i>
-      </button>
+    <div class="pricing-grid">
+
+      <!-- PLAN 1: BOT DISCORD -->
+      <div class="card">
+        <div class="card-tag" style="background: #3b82f6; color: #fff;">Nuevo</div>
+        <h3>Bot de Discord</h3>
+        <p style="color: var(--text-muted); font-size: 0.85rem;">Automatización total para tu comunidad o servidor.</p>
+        <div class="price-box">
+          <div class="price">$20 <sub>USD</sub></div>
+        </div>
+        <ul class="features">
+          <li>Tickets con botones interactivos</li>
+          <li>Bienvenidas con roles automáticos</li>
+          <li>Comandos y logs administrativos</li>
+          <li>Conexión con Webhooks en vivo</li>
+          <li><strong>Entrega express:</strong> 24-48 horas</li>
+        </ul>
+        <a href="https://discord.gg/nexus-studio" target="_blank" class="btn btn-outline">Solicitar en Discord</a>
+      </div>
+
+      <!-- PLAN 2: STARTER -->
+      <div class="card">
+        <h3>Plan Starter</h3>
+        <p style="color: var(--text-muted); font-size: 0.85rem;">Presencia express para pequeños negocios.</p>
+        <div class="price-box">
+          <div class="price">$35 <sub>USD</sub></div>
+        </div>
+        <ul class="features">
+          <li>Landing Page One-Page profesional</li>
+          <li>Botón flotante a WhatsApp</li>
+          <li>Diseño 100% adaptable a móvil y PC</li>
+          <li>Alojamiento gratuito 24/7 (SSL seguro)</li>
+          <li><strong>Entrega express:</strong> 24-48 horas</li>
+        </ul>
+        <a href="https://discord.gg/nexus-studio" target="_blank" class="btn btn-outline">Elegir Starter</a>
+      </div>
+
+      <!-- PLAN 3: COMERCIAL PRO -->
+      <div class="card featured">
+        <div class="card-tag">Más Popular</div>
+        <h3>Comercial Pro</h3>
+        <p style="color: var(--text-muted); font-size: 0.85rem;">Todo lo necesario para vender y recibir pedidos.</p>
+        <div class="price-box">
+          <div class="price">$65 <sub>USD</sub></div>
+        </div>
+        <ul class="features">
+          <li><strong>Todo lo del Plan Starter</strong></li>
+          <li>Catálogo visual interactivo</li>
+          <li>Carrito de compras funcional</li>
+          <li>Alertas instantáneas a Discord por Webhooks</li>
+          <li>Optimización SEO y velocidad de carga</li>
+        </ul>
+        <a href="https://discord.gg/nexus-studio" target="_blank" class="btn">Elegir Pro</a>
+      </div>
+
+      <!-- PLAN 4: ELITE -->
+      <div class="card">
+        <h3>Plan Élite</h3>
+        <p style="color: var(--text-muted); font-size: 0.85rem;">Plataforma completa de máxima categoría.</p>
+        <div class="price-box">
+          <div class="price">$111 <sub>USD</sub></div>
+        </div>
+        <ul class="features">
+          <li><strong>Todo lo de Comercial Pro</strong></li>
+          <li>Rastreo de órdenes en vivo</li>
+          <li>Diseño a medida de alto impacto</li>
+          <li>Soporte técnico prioritario 24/7</li>
+          <li>Entrega: 5 a 7 días hábiles</li>
+        </ul>
+        <a href="https://discord.gg/nexus-studio" target="_blank" class="btn btn-outline">Elegir Élite</a>
+      </div>
+
     </div>
-  </nav>
+  </section>
 
-  <!-- CONTENEDOR PRINCIPAL DE VISTAS (SPA) -->
-  <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 pt-24 sm:pt-28 pb-12 flex items-center justify-center">
+  <!-- METODOS DE PAGO OFICIALES -->
+  <section class="payments-section" id="pagos">
+    <h3>💳 Métodos de Pago Oficiales</h3>
+    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem;">
+      Aceptamos transferencias locales directas en Ecuador y pagos globales en criptomonedas.
+    </p>
 
-    <!-- 1. VISTA: INICIO -->
-    <section id="vista-inicio" class="vista-seccion w-full max-w-4xl text-center py-6 sm:py-10 animate-fade-view">
-      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-800/80 border border-slate-700/60 text-xs text-blue-300 mb-6 animate-pulse-subtle">
-        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-        <span data-i18n="hero_badge">Sistema de Pedidos 100% Automatizado a Discord</span>
-      </div>
-      <h1 class="text-3xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-tight mb-6">
-        <span data-i18n="hero_title_1">Lleva tu negocio a internet con una web</span> 
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-indigo-400" data-i18n="hero_title_2">rápida, moderna y vendedora.</span>
-      </h1>
-      <p class="text-slate-400 text-sm sm:text-base md:text-lg max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed" data-i18n="hero_desc">
-        Adquiere tu paquete digital con tarifas promocionales. El pedido nos llega directo a Discord al instante, puedes revisar el estado de tu orden en tiempo real y coordinar fotos por WhatsApp.
-      </p>
-      <div class="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4">
-        <button onclick="cambiarVista('precios')" class="w-full sm:w-auto px-8 py-3.5 text-sm font-bold text-white bg-blue-600 hover:bg-blue-500 rounded-xl shadow-lg shadow-blue-600/30 transition flex items-center justify-center gap-2 hover:scale-105 duration-200">
-          <span data-i18n="btn_ver_tarifas">Ver Tarifas con Descuento</span>
-          <i data-lucide="arrow-right" class="w-4 h-4"></i>
-        </button>
-        <button onclick="abrirMisPedidosModal()" class="w-full sm:w-auto px-8 py-3.5 text-sm font-bold text-slate-300 bg-slate-800/80 hover:bg-slate-800 border border-slate-700 rounded-xl transition flex items-center justify-center gap-2 hover:border-slate-600 duration-200">
-          <i data-lucide="package" class="w-4 h-4 text-cyan-400"></i>
-          <span data-i18n="btn_consultar_pedidos">Consultar Mis Pedidos</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- 2. VISTA: PRECIOS -->
-    <section id="vista-precios" class="vista-seccion hidden w-full py-6 animate-fade-view">
-      <div class="text-center mb-10">
-        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-950 border border-emerald-800 text-emerald-400 text-xs font-bold mb-2">
-          <span data-i18n="precios_badge">🔥 DESCUENTOS DE LANZAMIENTO DISPONIBLES</span>
-        </div>
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-white" data-i18n="precios_titulo">Tarifas y Paquetes</h2>
-        <p class="text-slate-400 text-xs mt-1" data-i18n="precios_subtitulo">Precios únicos sin mensualidades obligatorias.</p>
+    <div class="payments-grid">
+      <div class="pay-card">
+        <span class="icon">⚡</span>
+        <h4>Litecoin (LTC)</h4>
+        <p>Pagos globales sin comisión. Envío directo a billetera.</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
-        <!-- PLAN STARTER -->
-        <div class="bg-slate-900/70 rounded-3xl p-6 sm:p-7 border border-slate-800 flex flex-col justify-between hover:border-slate-700 transition">
-          <div>
-            <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Plan Starter</span>
-            <div class="mt-3 mb-2 flex items-baseline gap-2">
-              <span class="text-slate-500 line-through text-base font-bold">$70</span>
-              <span class="text-3xl sm:text-4xl font-extrabold text-white">$35</span>
-              <span class="text-slate-500 text-xs" data-i18n="pago_unico">/ pago único</span>
-            </div>
-            <p class="text-slate-400 text-xs mb-6" data-i18n="starter_desc">Presencia express para pequeños negocios o profesionales.</p>
-            <ul class="space-y-3 text-xs text-slate-300 mb-6">
-              <li class="flex items-center gap-2">
-                <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                <span data-i18n="starter_item1">Landing Page de 1 sección</span>
-              </li>
-              <li class="flex items-center gap-2">
-                <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                <span data-i18n="starter_item2">Botón flotante a WhatsApp</span>
-              </li>
-              <li class="flex items-center gap-2">
-                <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                <span data-i18n="starter_item3">Adaptada a celular y PC</span>
-              </li>
-              <li class="flex items-center gap-2">
-                <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                <span data-i18n="starter_item4">Alojamiento gratuito 24/7</span>
-              </li>
-            </ul>
-          </div>
-          <div class="flex gap-2">
-            <button onclick="agregarAlCarrito('Plan Starter', 35)" class="p-3 bg-slate-800 hover:bg-slate-700 text-cyan-400 rounded-xl border border-slate-700" title="Añadir al Carrito">
-              <i data-lucide="plus" class="w-4 h-4"></i>
-            </button>
-            <button onclick="comprarDirecto('Plan Starter (Oferta $35)', 35)" class="flex-1 py-3 text-center text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 rounded-xl transition shadow-md shadow-blue-600/30">
-              <span data-i18n="btn_comprar_starter">Comprar ($35)</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- PLAN PRO -->
-        <div class="bg-gradient-to-b from-blue-950/50 via-slate-900 to-slate-900 rounded-3xl p-6 sm:p-7 border-2 border-blue-500 flex flex-col justify-between shadow-2xl shadow-blue-950/60 relative hover:-translate-y-1 transition duration-200">
-          <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 flex flex-col items-center">
-            <span class="px-3.5 py-0.5 rounded-full bg-blue-600 text-white text-[10px] font-black uppercase tracking-wider shadow-md" data-i18n="tag_mas_vendido">
-              MÁS VENDIDO
-            </span>
-            <span class="px-2.5 py-0.5 rounded-full bg-emerald-500 text-slate-950 text-[9px] font-black uppercase tracking-wider mt-0.5 shadow-sm" data-i18n="tag_descuento">
-              50% DE DESCUENTO
-            </span>
-          </div>
-          <div class="pt-2">
-            <span class="text-xs font-bold uppercase tracking-wider text-blue-400">Plan Comercial Pro</span>
-            <div class="mt-3 mb-2 flex items-baseline gap-2">
-              <span class="text-slate-500 line-through text-base font-bold">$130</span>
-              <span class="text-3xl sm:text-4xl font-extrabold text-white">$65</span>
-              <span class="text-slate-500 text-xs" data-i18n="pago_unico">/ pago único</span>
-            </div>
-            <p class="text-slate-400 text-xs mb-6" data-i18n="pro_desc">Catálogo visual completo optimizado para ventas inmediatas.</p>
-            <ul class="space-y-3 text-xs text-slate-200 mb-6">
-              <li class="flex items-center gap-2">
-                <i data-lucide="check-circle" class="w-4 h-4 text-blue-400 shrink-0"></i>
-                <span class="font-bold text-white" data-i18n="pro_item1">Todo lo del plan Starter</span>
-              </li>
-              <li class="flex items-center gap-2">
-                <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                <span data-i18n="pro_item2">Catálogo con fotos de productos/servicios</span>
-              </li>
-              <li class="flex items-center gap-2">
-                <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                <span data-i18n="pro_item3">Ubicación en mapa interactivo</span>
-              </li>
-              <li class="flex items-center gap-2">
-                <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                <span data-i18n="pro_item4">Entrega ultra express en 24 a 48h</span>
-              </li>
-            </ul>
-          </div>
-          <div class="flex gap-2">
-            <button onclick="agregarAlCarrito('Plan Comercial Pro', 65)" class="p-3 bg-slate-800 hover:bg-slate-700 text-cyan-400 rounded-xl border border-slate-700" title="Añadir al Carrito">
-              <i data-lucide="plus" class="w-4 h-4"></i>
-            </button>
-            <button onclick="comprarDirecto('Plan Comercial Pro (Oferta $65)', 65)" class="flex-1 py-3 text-center text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 rounded-xl transition shadow-lg shadow-blue-600/30">
-              <span data-i18n="btn_comprar_pro">Aprovechar Oferta ($65)</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- PLAN ÉLITE -->
-        <div class="bg-slate-900/70 rounded-3xl p-6 sm:p-7 border border-slate-800 flex flex-col justify-between hover:border-slate-700 transition">
-          <div>
-            <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Plan Élite</span>
-            <div class="mt-3 mb-2 flex items-baseline gap-2">
-              <span class="text-slate-500 line-through text-base font-bold">$200</span>
-              <span class="text-3xl sm:text-4xl font-extrabold text-white">$110</span>
-              <span class="text-slate-500 text-xs" data-i18n="pago_unico">/ pago único</span>
-            </div>
-            <p class="text-slate-400 text-xs mb-6" data-i18n="elite_desc">Presencia premium con dominio propio .com y funciones personalizadas.</p>
-            <ul class="space-y-3 text-xs text-slate-300 mb-6">
-              <li class="flex items-center gap-2">
-                <i data-lucide="check-circle" class="w-4 h-4 text-cyan-400 shrink-0"></i>
-                <span class="font-bold text-white" data-i18n="elite_item1">Todo lo del plan Pro</span>
-              </li>
-              <li class="flex items-center gap-2">
-                <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                <span data-i18n="elite_item2">Dominio propio .com por 1 año</span>
-              </li>
-              <li class="flex items-center gap-2">
-                <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                <span data-i18n="elite_item3">Mini cotizador o cálculo automático</span>
-              </li>
-              <li class="flex items-center gap-2">
-                <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                <span data-i18n="elite_item4">1 mes de soporte y cambios gratis</span>
-              </li>
-            </ul>
-          </div>
-          <div class="flex gap-2">
-            <button onclick="agregarAlCarrito('Plan Élite', 110)" class="p-3 bg-slate-800 hover:bg-slate-700 text-cyan-400 rounded-xl border border-slate-700" title="Añadir al Carrito">
-              <i data-lucide="plus" class="w-4 h-4"></i>
-            </button>
-            <button onclick="comprarDirecto('Plan Élite (Oferta $110)', 110)" class="flex-1 py-3 text-center text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 rounded-xl transition border border-slate-700">
-              <span data-i18n="btn_comprar_elite">Comprar Plan Élite ($110)</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 3. VISTA: EJEMPLOS -->
-    <section id="vista-ejemplos" class="vista-seccion hidden w-full py-6 animate-fade-view">
-      <div class="text-center mb-8">
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-white" data-i18n="ejemplos_titulo">Galería de Proyectos Modelo</h2>
-        <p class="text-slate-400 text-xs mt-1" data-i18n="ejemplos_subtitulo">Navega con las flechas para explorar diseños listos para adaptar a tu negocio.</p>
+      <div class="pay-card">
+        <span class="icon">🟡</span>
+        <h4>Banco Pichincha</h4>
+        <p>Transferencia directa o depósito (De Una / Web).</p>
       </div>
 
-      <div class="relative max-w-2xl mx-auto">
-        <div id="slider-card" class="bg-slate-900 border border-slate-700/80 rounded-3xl overflow-hidden shadow-2xl transition-all duration-300 animate-slide-card">
-          <div class="h-60 sm:h-72 relative overflow-hidden">
-            <img id="slider-img" src="" alt="Ejemplo" class="w-full h-full object-cover">
-            <span id="slider-badge" class="absolute top-4 right-4 bg-slate-950/80 backdrop-blur-md text-[11px] font-bold px-3 py-1 rounded-full text-blue-300 border border-slate-700"></span>
-          </div>
-          <div class="p-5 sm:p-8 flex flex-col justify-between">
-            <div>
-              <h3 id="slider-title" class="text-xl sm:text-2xl font-black text-white mb-2"></h3>
-              <p id="slider-desc" class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-6"></p>
-            </div>
-            <div class="flex items-center justify-between gap-4 pt-4 border-t border-slate-800">
-              <span id="slider-count" class="text-xs font-mono text-slate-500 font-bold">1 / 6</span>
-              <button id="slider-btn" onclick="" class="px-5 sm:px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl text-xs transition shadow-lg shadow-blue-600/30">
-                <span data-i18n="btn_pedir_ejemplo">Pedir una así</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <button onclick="moverSlider(-1)" title="Anterior" class="absolute -left-3 sm:-left-6 top-1/2 -translate-y-1/2 w-10 sm:w-12 h-10 sm:h-12 bg-slate-800/90 hover:bg-blue-600 border border-slate-700 text-white rounded-full flex items-center justify-center shadow-xl transition hover:scale-110 active:scale-95 z-20">
-          <i data-lucide="chevron-left" class="w-5 sm:w-6 h-5 sm:h-6"></i>
-        </button>
-        <button onclick="moverSlider(1)" title="Siguiente" class="absolute -right-3 sm:-right-6 top-1/2 -translate-y-1/2 w-10 sm:w-12 h-10 sm:h-12 bg-slate-800/90 hover:bg-blue-600 border border-slate-700 text-white rounded-full flex items-center justify-center shadow-xl transition hover:scale-110 active:scale-95 z-20">
-          <i data-lucide="chevron-right" class="w-5 sm:w-6 h-5 sm:h-6"></i>
-        </button>
-      </div>
-    </section>
-
-    <!-- 4. VISTA: OPINIONES -->
-    <section id="vista-opiniones" class="vista-seccion hidden w-full py-6 animate-fade-view">
-      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
-        <div class="text-center sm:text-left">
-          <h2 class="text-2xl sm:text-3xl font-black text-white tracking-wider pixel-font inline-block border-b-4 border-blue-500 pb-1" data-i18n="opiniones_titulo">
-            Opiniones de Clientes
-          </h2>
-          <p class="text-xs text-slate-400 mt-2 font-mono" data-i18n="opiniones_subtitulo">Calificaciones reales de emprendedores que crearon su web con nosotros.</p>
-        </div>
-        <button onclick="abrirReviewModal()" class="w-full sm:w-auto px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg shadow-blue-600/30 transition hover:scale-105">
-          <i data-lucide="edit-3" class="w-4 h-4"></i>
-          <span data-i18n="btn_dejar_opinion">⭐ Dejar mi Opinión</span>
-        </button>
+      <div class="pay-card">
+        <span class="icon">🟣</span>
+        <h4>Banco Guayaquil</h4>
+        <p>Transferencia bancaria directa / App.</p>
       </div>
 
-      <div id="reviews-grid" class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5"></div>
-    </section>
-
-    <!-- 5. VISTA: GARANTÍA -->
-    <section id="vista-garantia" class="vista-seccion hidden w-full py-6 animate-fade-view">
-      <div class="text-center mb-10">
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-white" data-i18n="garantia_titulo">Garantía de Calidad Nexus</h2>
-        <p class="text-slate-400 text-xs mt-1" data-i18n="garantia_subtitulo">Estándares técnicos aplicados en cada uno de nuestros desarrollos.</p>
+      <div class="pay-card">
+        <span class="icon">🔵</span>
+        <h4>Banco del Pacífico</h4>
+        <p>Transferencia bancaria directa / Intermático.</p>
       </div>
+    </div>
+  </section>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-slate-900/60 border border-slate-800 p-6 sm:p-8 rounded-3xl">
-          <div class="w-12 h-12 rounded-2xl bg-blue-950/60 border border-blue-800/40 text-blue-400 flex items-center justify-center mb-4">
-            <i data-lucide="zap" class="w-6 h-6"></i>
-          </div>
-          <h4 class="text-lg font-bold text-white mb-2" data-i18n="g1_title">Carga en 1 segundo</h4>
-          <p class="text-slate-400 text-xs leading-relaxed" data-i18n="g1_desc">Código limpio, ligero y sin plugins pesados. Tus prospectos ingresan sin tiempos de espera molestos.</p>
-        </div>
-
-        <div class="bg-slate-900/60 border border-slate-800 p-6 sm:p-8 rounded-3xl">
-          <div class="w-12 h-12 rounded-2xl bg-blue-950/60 border border-blue-800/40 text-cyan-400 flex items-center justify-center mb-4">
-            <i data-lucide="monitor-smartphone" class="w-6 h-6"></i>
-          </div>
-          <h4 class="text-lg font-bold text-white mb-2" data-i18n="g2_title">100% Celulares y Computadoras</h4>
-          <p class="text-slate-400 text-xs leading-relaxed" data-i18n="g2_desc">Diseño adaptable inteligente. Cada sección se ajusta de forma exacta a teléfonos, tablets o computadoras de escritorio.</p>
-        </div>
-
-        <div class="bg-slate-900/60 border border-slate-800 p-6 sm:p-8 rounded-3xl">
-          <div class="w-12 h-12 rounded-2xl bg-blue-950/60 border border-blue-800/40 text-emerald-400 flex items-center justify-center mb-4">
-            <i data-lucide="shield-check" class="w-6 h-6"></i>
-          </div>
-          <h4 class="text-lg font-bold text-white mb-2" data-i18n="g3_title">Notificaciones Automatizadas</h4>
-          <p class="text-slate-400 text-xs leading-relaxed" data-i18n="g3_desc">Cada orden u opinión viaja en tiempo real mediante Webhooks para que la atención comience sin retrasos.</p>
-        </div>
-      </div>
-    </section>
-
-  </main>
+  <!-- BOTÓN FLOTANTE: IA ASISTENTE -->
+  <a href="https://discord.gg/nexus-studio" target="_blank" class="ai-assist-btn">
+    <span>🤖</span> Soporte & Asistente IA
+  </a>
 
   <!-- FOOTER -->
-  <footer class="border-t border-slate-800 py-6 px-6 text-center text-xs text-slate-500">
-    <p data-i18n="footer_copy">© 2026 Nexus Studio. Construyendo la presencia digital de negocios independientes.</p>
+  <footer>
+    <p>© 2026 Nexus Studio. Desarrollado por <a href="https://discord.gg/nexus-studio" target="_blank">Shadowman</a>. Todos los derechos reservados.</p>
   </footer>
 
-  <!-- MODAL: MIS PEDIDOS & RASTREO -->
-  <div id="mis-pedidos-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-700 w-full max-w-xl rounded-3xl p-5 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto admin-scrollbar">
-      <button onclick="cerrarMisPedidosModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white">
-        <i data-lucide="x" class="w-5 h-5"></i>
-      </button>
-
-      <div class="flex items-center gap-2.5 mb-6">
-        <div class="w-9 h-9 rounded-xl bg-blue-600/30 text-blue-400 flex items-center justify-center">
-          <i data-lucide="package" class="w-5 h-5"></i>
-        </div>
-        <div>
-          <h3 class="text-lg sm:text-xl font-bold text-white" data-i18n="modal_pedidos_title">Mis Pedidos & Rastreo</h3>
-          <p class="text-xs text-slate-400" data-i18n="modal_pedidos_sub">Consulta el estado en vivo de tu proyecto web.</p>
-        </div>
-      </div>
-
-      <div class="bg-slate-800/60 p-3 rounded-2xl border border-slate-700/80 mb-6">
-        <form onsubmit="buscarOrdenManual(event)" class="flex gap-2">
-          <input type="text" id="track-manual-input" placeholder="Buscar por Order ID (ej: ORD-4016)..." required class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-white text-xs focus:border-blue-500 focus:outline-none">
-          <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl text-xs transition" data-i18n="btn_rastrear">
-            Rastrear
-          </button>
-        </form>
-      </div>
-
-      <div id="mis-pedidos-lista" class="space-y-4"></div>
-    </div>
-  </div>
-
-  <!-- MODAL: CARRITO DE COMPRAS -->
-  <div id="cart-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-3xl p-6 sm:p-8 shadow-2xl relative">
-      <button onclick="cerrarCarritoModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white">
-        <i data-lucide="x" class="w-5 h-5"></i>
-      </button>
-
-      <div class="flex items-center gap-2.5 mb-5">
-        <div class="w-8 h-8 rounded-lg bg-blue-600/30 text-blue-400 flex items-center justify-center">
-          <i data-lucide="shopping-bag" class="w-4 h-4"></i>
-        </div>
-        <h3 class="text-xl font-bold text-white" data-i18n="cart_title">Tu Carrito de Compra</h3>
-      </div>
-
-      <div id="cart-items-container" class="space-y-3 max-h-60 overflow-y-auto chat-scrollbar mb-6"></div>
-
-      <div class="border-t border-slate-800 pt-4 mb-6 flex items-center justify-between">
-        <span class="text-xs text-slate-400 font-bold uppercase" data-i18n="cart_total">Total Estimado:</span>
-        <span id="cart-total-price" class="text-2xl font-black text-white">$0 USD</span>
-      </div>
-
-      <div class="flex flex-col gap-2">
-        <button onclick="iniciarCheckoutDesdeCarrito()" id="btn-checkout-cart" class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition flex items-center justify-center gap-2 text-xs">
-          <i data-lucide="check" class="w-4 h-4"></i>
-          <span data-i18n="cart_finalizar">Finalizar Orden Completa</span>
-        </button>
-        <button onclick="vaciarCarrito()" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-slate-400 rounded-xl transition text-[11px]" data-i18n="cart_vaciar">
-          Vaciar Carrito
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL: CHECKOUT DE COMPRAS -->
-  <div id="checkout-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-3xl p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto admin-scrollbar">
-      <button onclick="cerrarCheckoutModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white">
-        <i data-lucide="x" class="w-5 h-5"></i>
-      </button>
-
-      <div class="flex items-center gap-2.5 mb-5">
-        <div class="w-8 h-8 rounded-lg bg-blue-600/30 text-blue-400 flex items-center justify-center">
-          <i data-lucide="send" class="w-4 h-4"></i>
-        </div>
-        <h3 class="text-xl font-bold text-white" data-i18n="checkout_title">Completar Pedido</h3>
-      </div>
-
-      <form id="order-form" onsubmit="enviarOrdenDiscord(event)" class="space-y-4 text-xs">
-        <div>
-          <label class="block text-slate-400 mb-1 font-semibold" data-i18n="lbl_plan">Plan o Servicios a Adquirir</label>
-          <input type="text" id="order-plan" readonly class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white font-bold focus:outline-none">
-        </div>
-
-        <div>
-          <label class="block text-slate-400 mb-1 font-semibold" data-i18n="lbl_nombre_real">Nombre Real del Cliente *</label>
-          <input type="text" id="order-realname" required placeholder="Ej. Andrés Gómez" class="w-full bg-slate-800/80 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white focus:border-blue-500 focus:outline-none">
-        </div>
-
-        <div>
-          <label class="block text-slate-400 mb-1 font-semibold" data-i18n="lbl_negocio">Nombre del Negocio o Marca *</label>
-          <input type="text" id="order-businessname" required placeholder="Ej. Pizzería Roma / Barbería Deluxe" class="w-full bg-slate-800/80 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white focus:border-blue-500 focus:outline-none">
-        </div>
-
-        <div>
-          <label class="block text-slate-400 mb-1 font-semibold" data-i18n="lbl_wa">WhatsApp de Contacto *</label>
-          <input type="tel" id="order-phone" required placeholder="Ej. 0984511517" class="w-full bg-slate-800/80 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white focus:border-blue-500 focus:outline-none">
-        </div>
-
-        <div>
-          <label class="block text-slate-400 mb-1 font-semibold" data-i18n="lbl_discord">Usuario de Discord (Opcional)</label>
-          <input type="text" id="order-discord" placeholder="Ej. @usuario o usuario#0000" class="w-full bg-slate-800/80 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white focus:border-blue-500 focus:outline-none">
-        </div>
-
-        <div>
-          <label class="block text-slate-400 mb-1 font-semibold" data-i18n="lbl_detalles">Detalles extras de tu proyecto</label>
-          <textarea id="order-notes" rows="2" placeholder="Colores deseados, lista de servicios o productos" class="w-full bg-slate-800/80 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white focus:border-blue-500 focus:outline-none"></textarea>
-          <p class="text-[10px] text-blue-400 mt-1" data-i18n="checkout_aviso_wa">📌 Las fotos, logos y referencias nos las envías directamente al WhatsApp de soporte tras confirmar.</p>
-        </div>
-
-        <button type="submit" id="order-submit-btn" class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition flex items-center justify-center gap-2">
-          <i data-lucide="check-circle" class="w-4 h-4"></i>
-          <span data-i18n="btn_confirmar_pedido">Confirmar y Enviar Pedido a Discord</span>
-        </button>
-      </form>
-    </div>
-  </div>
-
-  <!-- MODAL: DEJAR REVIEW -->
-  <div id="review-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-3xl p-6 shadow-2xl relative">
-      <button onclick="cerrarReviewModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white">
-        <i data-lucide="x" class="w-5 h-5"></i>
-      </button>
-
-      <div class="flex items-center gap-2.5 mb-5">
-        <div class="w-8 h-8 rounded-lg bg-blue-600/30 text-blue-400 flex items-center justify-center">
-          <i data-lucide="star" class="w-4 h-4 text-amber-400"></i>
-        </div>
-        <h3 class="text-xl font-bold text-white" data-i18n="rev_modal_title">Dejar Opinión</h3>
-      </div>
-
-      <form onsubmit="guardarReviewPublica(event)" class="space-y-4 text-xs">
-        <div>
-          <label class="block text-slate-400 mb-1 font-semibold" data-i18n="rev_lbl_nombre">Tu Nombre o Nombre de tu Negocio *</label>
-          <input type="text" id="public-review-name" required placeholder="Ej. Carlos M. (Barbería Deluxe)" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white focus:border-blue-500 focus:outline-none">
-        </div>
-
-        <div>
-          <label class="block text-slate-400 mb-1 font-semibold" data-i18n="rev_lbl_servicio">Servicio Contratado</label>
-          <select id="public-review-tag" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white focus:border-blue-500 focus:outline-none">
-            <option value="Cliente Verificado • Plan Pro">Plan Comercial Pro ($65)</option>
-            <option value="Cliente Verificado • Plan Starter">Plan Starter ($35)</option>
-            <option value="Cliente Verificado • Plan Élite">Plan Élite ($110)</option>
-            <option value="Cliente Verificado • Automatización">Bot / Automatización</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="block text-slate-400 mb-1 font-semibold" data-i18n="rev_lbl_calif">Calificación</label>
-          <select id="public-review-stars" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-amber-400 font-bold focus:border-blue-500 focus:outline-none">
-            <option value="5">★★★★★ (5/5)</option>
-            <option value="4">★★★★☆ (4/5)</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="block text-slate-400 mb-1 font-semibold" data-i18n="rev_lbl_comentario">Tu Comentario / Experiencia *</label>
-          <textarea id="public-review-text" required rows="3" placeholder="¿Qué tal te pareció el diseño y la velocidad de entrega?" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white focus:border-blue-500 focus:outline-none"></textarea>
-        </div>
-
-        <button type="submit" id="btn-submit-review" class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition flex items-center justify-center gap-2">
-          <i data-lucide="check" class="w-4 h-4"></i>
-          <span data-i18n="btn_publicar_rev">Publicar Opinión y Notificar a Discord</span>
-        </button>
-      </form>
-    </div>
-  </div>
-
-  <!-- PANEL ADMINISTRADOR DUEÑO -->
-  <div id="admin-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-700 w-full max-w-3xl rounded-3xl p-6 sm:p-8 shadow-2xl max-h-[90vh] overflow-y-auto admin-scrollbar relative">
-      <button onclick="cerrarAdminModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white">
-        <i data-lucide="x" class="w-5 h-5"></i>
-      </button>
-
-      <div id="admin-auth-screen" class="text-center py-8 max-w-sm mx-auto">
-        <div class="w-12 h-12 rounded-2xl bg-blue-950 border border-blue-700/50 text-blue-400 flex items-center justify-center mx-auto mb-4">
-          <i data-lucide="shield" class="w-6 h-6"></i>
-        </div>
-        <h3 class="text-xl font-bold text-white mb-2">Acceso Exclusivo de Dueño</h3>
-        <p class="text-xs text-slate-400 mb-6">Introduce tu clave de administrador para gestionar Discord y pedidos.</p>
-        <form onsubmit="verificarAdminPassword(event)" class="space-y-4">
-          <input type="password" id="admin-pass-input" placeholder="Contraseña de Dueño" required class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-white text-center text-sm focus:border-blue-500 focus:outline-none">
-          <p id="admin-error-msg" class="text-xs text-rose-400 hidden">Clave incorrecta.</p>
-          <button type="submit" class="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl text-xs transition">Ingresar al Panel</button>
-        </form>
-      </div>
-
-      <div id="admin-dashboard-screen" class="hidden space-y-8">
-        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
-          <div>
-            <h3 class="text-lg font-bold text-white flex items-center gap-2">
-              <span>Panel de Control Nexus</span>
-              <span class="text-[10px] bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded-full font-bold">DUEÑO ACTIVO</span>
-            </h3>
-            <p class="text-xs text-slate-400">Automatizaciones, Webhooks y Control de Estados.</p>
-          </div>
-          <button onclick="cerrarSesionAdmin()" class="text-xs text-slate-400 hover:text-rose-400">Cerrar Sesión</button>
-        </div>
-
-        <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-5 text-xs">
-          <h4 class="font-bold text-white mb-2 flex items-center gap-2 text-sm text-[#5865F2]">
-            <i data-lucide="bot" class="w-4 h-4"></i>
-            <span>Webhooks de Discord (Activos y Guardados)</span>
-          </h4>
-          <div class="space-y-3">
-            <div>
-              <label class="block text-slate-400 mb-1">Webhook de Pedidos:</label>
-              <input type="url" id="admin-webhook-orders" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-300 font-mono text-[11px]" readonly>
-            </div>
-            <div>
-              <label class="block text-slate-400 mb-1">Webhook de Reviews (#webhook):</label>
-              <input type="url" id="admin-webhook-reviews" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-300 font-mono text-[11px]" readonly>
-            </div>
-          </div>
-        </div>
-
-        <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-5 text-xs">
-          <div class="flex items-center justify-between mb-3">
-            <h4 class="font-bold text-white text-sm flex items-center gap-2">
-              <i data-lucide="layers" class="w-4 h-4 text-cyan-400"></i>
-              <span>Gestión de Pedidos & Estados en Vivo</span>
-            </h4>
-            <span class="text-[11px] text-slate-400">Sincroniza con "Mis Pedidos" y con Discord</span>
-          </div>
-          <div id="admin-orders-list" class="space-y-4"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- BURBUJAS FLOTANTES (DERECHA) -->
-  <div class="fixed bottom-6 right-6 z-50 flex flex-col gap-3 items-end">
-    <!-- Discord -->
-    <a href="https://discord.gg/TjwHdcRpzx" target="_blank" title="Comunidad Discord" class="w-13 h-13 sm:w-14 sm:h-14 bg-[#5865F2] hover:bg-[#4752c4] text-white rounded-full shadow-lg shadow-[#5865F2]/40 flex items-center justify-center transition-all duration-200 hover:scale-110 group relative p-3">
-      <svg class="w-6 sm:w-7 h-6 sm:h-7 fill-current" viewBox="0 0 127.14 96.36">
-        <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,45.91,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,45.91,96.12,53,91.08,65.69,84.69,65.69Z"/>
-      </svg>
-    </a>
-
-    <!-- WhatsApp -->
-    <a href="https://wa.me/593984511517?text=Hola%20Nexus%20Studio,%20estoy%20en%20tu%20p%C3%A1gina%20y%20quiero%20m%C3%A1s%20informaci%C3%B3n" target="_blank" title="WhatsApp" class="w-13 h-13 sm:w-14 sm:h-14 bg-emerald-500 hover:bg-emerald-400 text-white rounded-full shadow-xl shadow-emerald-500/40 flex items-center justify-center transition-all duration-200 hover:scale-110 group relative animate-pulse-subtle p-3">
-      <svg class="w-6 sm:w-7 h-6 sm:h-7 fill-current" viewBox="0 0 24 24">
-        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
-      </svg>
-    </a>
-  </div>
-
-  <!-- BOT SOPORTE -->
-  <div class="fixed bottom-6 left-6 z-50">
-    <button id="soporte-toggle-btn" class="w-13 h-13 sm:w-14 sm:h-14 bg-gradient-to-tr from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white rounded-full shadow-xl shadow-blue-600/40 flex items-center justify-center transition-all duration-200 hover:scale-110 group relative animate-bounce p-3">
-      <i data-lucide="headset" class="w-6 sm:w-7 h-6 sm:h-7"></i>
-      <span class="absolute top-0 right-0 w-3.5 h-3.5 sm:w-4 sm:h-4 bg-emerald-400 border-2 border-[#0b0f19] rounded-full"></span>
-    </button>
-
-    <div id="soporte-modal" class="hidden absolute bottom-16 left-0 w-[300px] sm:w-[360px] bg-slate-900/95 backdrop-blur-xl border border-slate-700 rounded-3xl shadow-2xl overflow-hidden transition-all duration-200 origin-bottom-left">
-      <div class="bg-gradient-to-r from-blue-900/80 to-slate-900 p-4 border-b border-slate-800 flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <div class="relative w-10 h-10 rounded-full bg-blue-600/50 border border-blue-400/30 flex items-center justify-center text-cyan-300 shadow-md">
-            <i data-lucide="headset" class="w-5 h-5"></i>
-            <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-400 rounded-full ring-2 ring-slate-900"></span>
-          </div>
-          <div>
-            <h4 class="text-sm font-bold text-white">Soporte Nexus</h4>
-            <p class="text-[11px] text-emerald-400 font-medium">En línea | Asistente IA</p>
-          </div>
-        </div>
-        <button id="soporte-close-btn" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
-      </div>
-
-      <div id="chat-messages" class="p-4 h-[350px] overflow-y-auto chat-scrollbar flex flex-col gap-3 text-xs">
-        <div class="flex flex-col items-start gap-1 max-w-[85%] animate-bounce-chat">
-          <div class="bg-slate-800/90 p-3.5 rounded-2xl rounded-tl-none border border-slate-700/60 text-slate-200 leading-relaxed shadow-sm" id="chat-welcome-msg">
-            ¡Hola! 🎉 Bienvenido a <strong>Nexus Studio</strong>. Elige una opción o consulta lo que necesites:
-          </div>
-          <span class="text-[10px] text-slate-500 ml-1" id="chat-time-init">12:00</span>
-        </div>
-
-        <div id="opciones-container" class="flex flex-col gap-2 pt-1">
-          <button onclick="enviarMensajeUsuario('tiempo')" class="w-full text-left p-2.5 rounded-xl bg-slate-800/70 hover:bg-blue-600/20 border border-slate-700 hover:border-blue-500/50 text-blue-300 font-semibold transition flex items-center justify-between group">
-            <span id="chat-opt-1">⏱ ¿En cuánto tiempo entregan?</span>
-            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500 group-hover:text-blue-400 transition"></i>
-          </button>
-          <button onclick="enviarMensajeUsuario('rastreo')" class="w-full text-left p-2.5 rounded-xl bg-slate-800/70 hover:bg-blue-600/20 border border-slate-700 hover:border-blue-500/50 text-blue-300 font-semibold transition flex items-center justify-between group">
-            <span id="chat-opt-2">🔍 ¿Cómo rastreo mi pedido?</span>
-            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500 group-hover:text-blue-400 transition"></i>
-          </button>
-          <button onclick="enviarMensajeUsuario('pagos')" class="w-full text-left p-2.5 rounded-xl bg-slate-800/70 hover:bg-blue-600/20 border border-slate-700 hover:border-blue-500/50 text-blue-300 font-semibold transition flex items-center justify-between group">
-            <span id="chat-opt-3">💳 ¿Cómo son los métodos de pago?</span>
-            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500 group-hover:text-blue-400 transition"></i>
-          </button>
-        </div>
-      </div>
-
-      <div class="p-3 bg-slate-900 border-t border-slate-800">
-        <a href="https://wa.me/593984511517?text=Hola%20Nexus%20Studio,%20estoy%20en%20el%20soporte%20y%20quiero%20hablar%20con%20un%20asesor" target="_blank" class="w-full py-2.5 px-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl flex items-center justify-center gap-2 text-xs transition shadow-md shadow-emerald-600/20">
-          <i data-lucide="message-square" class="w-4 h-4"></i>
-          <span data-i18n="chat_hablar_humano">Hablar con un asesor real</span>
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- SCRIPT PRINCIPAL -->
-  <script>
-    lucide.createIcons();
-
-    const ADMIN_PASS = "nexus2026";
-    const NEXUS_AVATAR = "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=128&q=80";
-
-    const WEBHOOK_ORDERS_DEFAULT = "https://discord.com/api/webhooks/1556375687252680714/4tKdekZqOJD1EBE_JUCsZgo8ANDj8nv7bxHKzvwKLNlMoCasatTQ1QnKVFQ1HgT9dOOK";
-    const WEBHOOK_REVIEWS_DEFAULT = "https://discord.com/api/webhooks/1556375695901331668/PeFlt58w70MgNjoCpQiB_zCx6J6Y4ETd6Kur9iRfyRcArF7Dv0bkRR5peP2pD6EW9VyW";
-
-    let webhookOrders = WEBHOOK_ORDERS_DEFAULT;
-    let webhookReviews = WEBHOOK_REVIEWS_DEFAULT;
-
-    // Toggle Menú Móvil
-    function toggleMenuMovil() {
-      const menu = document.getElementById('mobile-menu-dropdown');
-      menu.classList.toggle('hidden');
-    }
-
-    // Traducciones i18n
-    const translations = {
-      es: {
-        nav_inicio: "Inicio",
-        nav_precios: "Precios",
-        nav_ejemplos: "Ejemplos",
-        nav_opiniones: "Opiniones",
-        nav_garantia: "Garantía",
-        btn_mis_pedidos: "Mis Pedidos",
-        btn_ordenar_nav: "Ordenar",
-        hero_badge: "Sistema de Pedidos 100% Automatizado a Discord",
-        hero_title_1: "Lleva tu negocio a internet con una web",
-        hero_title_2: "rápida, moderna y vendedora.",
-        hero_desc: "Adquiere tu paquete digital con tarifas promocionales. El pedido nos llega directo a Discord al instante, puedes revisar el estado de tu orden en tiempo real y coordinar fotos por WhatsApp.",
-        btn_ver_tarifas: "Ver Tarifas con Descuento",
-        btn_consultar_pedidos: "Consultar Mis Pedidos",
-        precios_badge: "🔥 DESCUENTOS DE LANZAMIENTO DISPONIBLES",
-        precios_titulo: "Tarifas y Paquetes",
-        precios_subtitulo: "Precios únicos sin mensualidades obligatorias.",
-        pago_unico: "/ pago único",
-        starter_desc: "Presencia express para pequeños negocios o profesionales.",
-        starter_item1: "Landing Page de 1 sección",
-        starter_item2: "Botón flotante a WhatsApp",
-        starter_item3: "Adaptada a celular y PC",
-        starter_item4: "Alojamiento gratuito 24/7",
-        btn_comprar_starter: "Comprar ($35)",
-        tag_mas_vendido: "MÁS VENDIDO",
-        tag_descuento: "50% DE DESCUENTO",
-        pro_desc: "Catálogo visual completo optimizado para ventas inmediatas.",
-        pro_item1: "Todo lo del plan Starter",
-        pro_item2: "Catálogo con fotos de productos/servicios",
-        pro_item3: "Ubicación en mapa interactivo",
-        pro_item4: "Entrega ultra express en 24 a 48h",
-        btn_comprar_pro: "Aprovechar Oferta ($65)",
-        elite_desc: "Presencia premium con dominio propio .com y funciones personalizadas.",
-        elite_item1: "Todo lo del plan Pro",
-        elite_item2: "Dominio propio .com por 1 año",
-        elite_item3: "Mini cotizador o cálculo automático",
-        elite_item4: "1 mes de soporte y cambios gratis",
-        btn_comprar_elite: "Comprar Plan Élite ($110)",
-        ejemplos_titulo: "Galería de Proyectos Modelo",
-        ejemplos_subtitulo: "Navega con las flechas para explorar diseños listos para adaptar a tu negocio.",
-        btn_pedir_ejemplo: "Pedir una así",
-        opiniones_titulo: "Opiniones de Clientes",
-        opiniones_subtitulo: "Calificaciones reales de emprendedores que crearon su web con nosotros.",
-        btn_dejar_opinion: "⭐ Dejar mi Opinión",
-        garantia_titulo: "Garantía de Calidad Nexus",
-        garantia_subtitulo: "Estándares técnicos aplicados en cada uno de nuestros desarrollos.",
-        g1_title: "Carga en 1 segundo",
-        g1_desc: "Código limpio, ligero y sin plugins pesados. Tus prospectos ingresan sin tiempos de espera molestos.",
-        g2_title: "100% Celulares y Computadoras",
-        g2_desc: "Diseño adaptable inteligente. Cada sección se ajusta de forma exacta a teléfonos, tablets o computadoras de escritorio.",
-        g3_title: "Notificaciones Automatizadas",
-        g3_desc: "Cada orden u opinión viaja en tiempo real mediante Webhooks para que la atención comience sin retrasos.",
-        footer_copy: "© 2026 Nexus Studio. Construyendo la presencia digital de negocios independientes.",
-        modal_pedidos_title: "Mis Pedidos & Rastreo",
-        modal_pedidos_sub: "Consulta el estado en vivo de tu proyecto web.",
-        btn_rastrear: "Rastrear",
-        cart_title: "Tu Carrito de Compra",
-        cart_total: "Total Estimado:",
-        cart_finalizar: "Finalizar Orden Completa",
-        cart_vaciar: "Vaciar Carrito",
-        checkout_title: "Completar Pedido",
-        lbl_plan: "Plan o Servicios a Adquirir",
-        lbl_nombre_real: "Nombre Real del Cliente *",
-        lbl_negocio: "Nombre del Negocio o Marca *",
-        lbl_wa: "WhatsApp de Contacto *",
-        lbl_discord: "Usuario de Discord (Opcional)",
-        lbl_detalles: "Detalles extras de tu proyecto",
-        checkout_aviso_wa: "📌 Las fotos, logos y referencias nos las envías directamente al WhatsApp de soporte tras confirmar.",
-        btn_confirmar_pedido: "Confirmar y Enviar Pedido a Discord",
-        rev_modal_title: "Dejar Opinión",
-        rev_lbl_nombre: "Tu Nombre o Nombre de tu Negocio *",
-        rev_lbl_servicio: "Servicio Contratado",
-        rev_lbl_calif: "Calificación",
-        rev_lbl_comentario: "Tu Comentario / Experiencia *",
-        btn_publicar_rev: "Publicar Opinión y Notificar a Discord",
-        chat_hablar_humano: "Hablar con un asesor real"
-      },
-      en: {
-        nav_inicio: "Home",
-        nav_precios: "Pricing",
-        nav_ejemplos: "Examples",
-        nav_opiniones: "Reviews",
-        nav_garantia: "Guarantee",
-        btn_mis_pedidos: "My Orders",
-        btn_ordenar_nav: "Order",
-        hero_badge: "100% Automated Discord Order System",
-        hero_title_1: "Bring your business online with a",
-        hero_title_2: "fast, modern, high-converting website.",
-        hero_desc: "Get your digital package at promotional rates. Your order reaches our Discord instantly, track live progress, and coordinate assets via WhatsApp.",
-        btn_ver_tarifas: "View Discounted Plans",
-        btn_consultar_pedidos: "Check My Orders",
-        precios_badge: "🔥 LIMITED TIME LAUNCH DISCOUNTS",
-        precios_titulo: "Plans & Packages",
-        precios_subtitulo: "One-time payments with no mandatory monthly fees.",
-        pago_unico: "/ one-time",
-        starter_desc: "Express online presence for small businesses & pros.",
-        starter_item1: "1-section Landing Page",
-        starter_item2: "Floating WhatsApp button",
-        starter_item3: "Mobile & PC responsive",
-        starter_item4: "Free 24/7 cloud hosting",
-        btn_comprar_starter: "Buy Starter ($35)",
-        tag_mas_vendido: "BEST SELLER",
-        tag_descuento: "50% OFF",
-        pro_desc: "Full visual catalog tailored for instant customer sales.",
-        pro_item1: "Everything in Starter plan",
-        pro_item2: "Product/services photo catalog",
-        pro_item3: "Interactive Google Maps location",
-        pro_item4: "Express 24-48h delivery",
-        btn_comprar_pro: "Claim 50% Off ($65)",
-        elite_desc: "Premium presence with custom .com domain & automated tools.",
-        elite_item1: "Everything in Pro plan",
-        elite_item2: "Custom .com domain for 1 year",
-        elite_item3: "Mini online quote calculator",
-        elite_item4: "1 month free support & updates",
-        btn_comprar_elite: "Buy Elite Plan ($110)",
-        ejemplos_titulo: "Showcase & Portfolio",
-        ejemplos_subtitulo: "Use the arrows to browse template designs ready for your brand.",
-        btn_pedir_ejemplo: "Order this style",
-        opiniones_titulo: "Customer Reviews",
-        opiniones_subtitulo: "Verified feedback from entrepreneurs who built their website with us.",
-        btn_dejar_opinion: "⭐ Leave a Review",
-        garantia_titulo: "Nexus Quality Guarantee",
-        garantia_subtitulo: "Technical standards applied to every single website.",
-        g1_title: "1-Second Load Speed",
-        g1_desc: "Ultra-clean code with zero bloatware. Prospects enter instantly.",
-        g2_title: "100% Mobile & Desktop",
-        g2_desc: "Smart responsive design scaling flawlessly on smartphones, tablets, and PCs.",
-        g3_title: "Automated Notifications",
-        g3_desc: "Real-time Discord Webhooks ensure fast response and tracking.",
-        footer_copy: "© 2026 Nexus Studio. Empowering modern independent brands.",
-        modal_pedidos_title: "My Orders & Live Tracking",
-        modal_pedidos_sub: "Check the real-time progress of your website.",
-        btn_rastrear: "Track",
-        cart_title: "Your Shopping Cart",
-        cart_total: "Estimated Total:",
-        cart_finalizar: "Complete Checkout",
-        cart_vaciar: "Empty Cart",
-        checkout_title: "Complete Order",
-        lbl_plan: "Selected Package",
-        lbl_nombre_real: "Client Full Name *",
-        lbl_negocio: "Business / Brand Name *",
-        lbl_wa: "Contact WhatsApp *",
-        lbl_discord: "Discord Username (Optional)",
-        lbl_detalles: "Project Details / Requests",
-        checkout_aviso_wa: "📌 You can send photos, logos, and references via WhatsApp after confirming.",
-        btn_confirmar_pedido: "Confirm & Send Order to Discord",
-        rev_modal_title: "Leave a Review",
-        rev_lbl_nombre: "Your Name or Business *",
-        rev_lbl_servicio: "Service Purchased",
-        rev_lbl_calif: "Rating",
-        rev_lbl_comentario: "Your Feedback *",
-        btn_publicar_rev: "Post Review & Notify Discord",
-        chat_hablar_humano: "Chat with a Human Agent"
-      },
-      pt: {
-        nav_inicio: "Início",
-        nav_precios: "Preços",
-        nav_ejemplos: "Exemplos",
-        nav_opiniones: "Avaliações",
-        nav_garantia: "Garantia",
-        btn_mis_pedidos: "Meus Pedidos",
-        btn_ordenar_nav: "Pedir",
-        hero_badge: "Sistema de Pedidos 100% Automatizado no Discord",
-        hero_title_1: "Leve seu negócio para a internet com um site",
-        hero_title_2: "rápido, moderno e vendedor.",
-        hero_desc: "Adquira seu pacote digital com tarifas promocionais. O pedido chega ao Discord instantaneamente, acompanhe o progresso em tempo real e combine fotos pelo WhatsApp.",
-        btn_ver_tarifas: "Ver Planos com Desconto",
-        btn_consultar_pedidos: "Consultar Meus Pedidos",
-        precios_badge: "🔥 DESCONTOS DE LANÇAMENTO DISPONÍVEIS",
-        precios_titulo: "Tarifas e Pacotes",
-        precios_subtitulo: "Pagamento único sem mensalidades obrigatórias.",
-        pago_unico: "/ pagamento único",
-        starter_desc: "Presença expressa para pequenos negócios ou autônomos.",
-        starter_item1: "Landing Page de 1 seção",
-        starter_item2: "Botão flutuante para WhatsApp",
-        starter_item3: "Adaptado para celular e PC",
-        starter_item4: "Hospedagem gratuita 24/7",
-        btn_comprar_starter: "Comprar Starter ($35)",
-        tag_mas_vendido: "MAIS VENDIDO",
-        tag_descuento: "50% DE DESCONTO",
-        pro_desc: "Catálogo visual completo pronto para vendas imediatas.",
-        pro_item1: "Tudo do plano Starter",
-        pro_item2: "Catálogo com fotos de produtos/serviços",
-        pro_item3: "Localização no mapa interativo",
-        pro_item4: "Entrega expressa em 24 a 48h",
-        btn_comprar_pro: "Aproveitar Oferta ($65)",
-        elite_desc: "Presença premium com domínio .com próprio e ferramentas automatizadas.",
-        elite_item1: "Tudo do plano Pro",
-        elite_item2: "Domínio próprio .com por 1 ano",
-        elite_item3: "Mini calculadora de orçamentos",
-        elite_item4: "1 mês de suporte e alterações grátis",
-        btn_comprar_elite: "Comprar Plano Elite ($110)",
-        ejemplos_titulo: "Galeria de Projetos Modelo",
-        ejemplos_subtitulo: "Navegue com as setas para ver designs prontos para seu negócio.",
-        btn_pedir_ejemplo: "Pedir um assim",
-        opiniones_titulo: "Avaliações de Clientes",
-        opiniones_subtitulo: "Depoimentos reais de empreendedores que criaram seus sites conosco.",
-        btn_dejar_opinion: "⭐ Deixar Avaliação",
-        garantia_titulo: "Garantia de Qualidade Nexus",
-        garantia_subtitulo: "Padrões técnicos aplicados em cada desenvolvimento.",
-        g1_title: "Carrega em 1 segundo",
-        g1_desc: "Código limpo, leve e sem plugins pesados. Seus clientes entram na hora.",
-        g2_title: "100% Celulares e Computadores",
-        g2_desc: "Design responsivo inteligente com adaptação perfeita em smartphones e PCs.",
-        g3_title: "Notificações Automatizadas",
-        g3_desc: "Webhooks do Discord em tempo real para atendimento imediato.",
-        footer_copy: "© 2026 Nexus Studio. Construindo a presença digital de negócios modernos.",
-        modal_pedidos_title: "Meus Pedidos e Rastreio",
-        modal_pedidos_sub: "Acompanhe o status em tempo real do seu projeto.",
-        btn_rastrear: "Rastrear",
-        cart_title: "Seu Carrinho de Compras",
-        cart_total: "Total Estimado:",
-        cart_finalizar: "Concluir Pedido",
-        cart_vaciar: "Esvaziar Carrinho",
-        checkout_title: "Finalizar Pedido",
-        lbl_plan: "Plano ou Serviços Selecionados",
-        lbl_nombre_real: "Nome Real do Cliente *",
-        lbl_negocio: "Nome do Negócio ou Marca *",
-        lbl_wa: "WhatsApp de Contato *",
-        lbl_discord: "Usuário do Discord (Opcional)",
-        lbl_detalles: "Detalhes do seu projeto",
-        checkout_aviso_wa: "📌 Fotos, logos e referências são enviados diretamente pelo WhatsApp após a confirmação.",
-        btn_confirmar_pedido: "Confirmar e Enviar Pedido para o Discord",
-        rev_modal_title: "Deixar Avaliação",
-        rev_lbl_nombre: "Seu Nome ou Nome do Negócio *",
-        rev_lbl_servicio: "Serviço Contratado",
-        rev_lbl_calif: "Classificação",
-        rev_lbl_comentario: "Seu Depoimento *",
-        btn_publicar_rev: "Publicar Avaliação no Discord",
-        chat_hablar_humano: "Falar com um atendente humano"
-      }
-    };
-
-    function detectarIdiomaInicial() {
-      const guardado = localStorage.getItem('nexus_lang');
-      if (guardado && ['es', 'en', 'pt'].includes(guardado)) return guardado;
-      const userLang = (navigator.language || navigator.userLanguage || 'es').toLowerCase();
-      if (userLang.startsWith('pt')) return 'pt';
-      if (userLang.startsWith('en')) return 'en';
-      return 'es';
-    }
-
-    let currentLang = detectarIdiomaInicial();
-
-    function aplicarTraduccion(lang) {
-      currentLang = lang;
-      localStorage.setItem('nexus_lang', lang);
-      document.getElementById('lang-selector').value = lang;
-
-      const t = translations[lang] || translations.es;
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (t[key]) el.innerText = t[key];
-      });
-
-      if (lang === 'en') {
-        document.getElementById('chat-welcome-msg').innerHTML = "Hello! 🎉 Welcome to <strong>Nexus Studio</strong>. Choose an option or ask anything:";
-        document.getElementById('chat-opt-1').innerText = "⏱ What is the delivery time?";
-        document.getElementById('chat-opt-2').innerText = "🔍 How can I track my order?";
-        document.getElementById('chat-opt-3').innerText = "💳 What payment methods are accepted?";
-      } else if (lang === 'pt') {
-        document.getElementById('chat-welcome-msg').innerHTML = "Olá! 🎉 Bem-vindo à <strong>Nexus Studio</strong>. Escolha uma opção ou tire suas dúvidas:";
-        document.getElementById('chat-opt-1').innerText = "⏱ Qual o prazo de entrega?";
-        document.getElementById('chat-opt-2').innerText = "🔍 Como rastrear meu pedido?";
-        document.getElementById('chat-opt-3').innerText = "💳 Quais são as formas de pagamento?";
-      } else {
-        document.getElementById('chat-welcome-msg').innerHTML = "¡Hola! 🎉 Bienvenido a <strong>Nexus Studio</strong>. Elige una opción o consulta lo que necesites:";
-        document.getElementById('chat-opt-1').innerText = "⏱ ¿En cuánto tiempo entregan?";
-        document.getElementById('chat-opt-2').innerText = "🔍 ¿Cómo rastreo mi pedido?";
-        document.getElementById('chat-opt-3').innerText = "💳 ¿Cómo son los métodos de pago?";
-      }
-
-      renderSlider();
-    }
-
-    function cambiarIdiomaManual(lang) {
-      aplicarTraduccion(lang);
-    }
-
-    // Controlador de Vistas SPA
-    function cambiarVista(nombreVista) {
-      document.querySelectorAll('.vista-seccion').forEach(sec => sec.classList.add('hidden'));
-      const target = document.getElementById(`vista-${nombreVista}`);
-      if (target) target.classList.remove('hidden');
-
-      document.querySelectorAll('.nav-tab-btn').forEach(btn => {
-        btn.classList.remove('text-white', 'bg-blue-600/30', 'border', 'border-blue-500/40');
-        btn.classList.add('text-slate-400');
-      });
-
-      const activeBtn = document.getElementById(`nav-${nombreVista}`);
-      if (activeBtn) {
-        activeBtn.classList.remove('text-slate-400');
-        activeBtn.classList.add('text-white', 'bg-blue-600/30', 'border', 'border-blue-500/40');
-      }
-
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // Mis Pedidos Modal
-    let orders = JSON.parse(localStorage.getItem('nexus_orders')) || [];
-
-    function abrirMisPedidosModal() {
-      renderMisPedidos();
-      document.getElementById('mis-pedidos-modal').classList.remove('hidden');
-    }
-    function cerrarMisPedidosModal() {
-      document.getElementById('mis-pedidos-modal').classList.add('hidden');
-    }
-
-    function renderMisPedidos(filtro = null) {
-      const container = document.getElementById('mis-pedidos-lista');
-      let lista = filtro ? orders.filter(o => o.id.toLowerCase() === filtro.toLowerCase() || o.telefono.includes(filtro)) : orders;
-
-      if (lista.length === 0) {
-        container.innerHTML = `
-          <div class="text-center py-8">
-            <i data-lucide="package-x" class="w-10 h-10 text-slate-500 mx-auto mb-2"></i>
-            <h4 class="text-sm font-bold text-white mb-1">${filtro ? 'No se encontró ninguna orden' : 'No tienes órdenes registradas'}</h4>
-            <p class="text-xs text-slate-400">Cuando compres un plan en la web, aquí verás el progreso de tu web en tiempo real.</p>
-          </div>
-        `;
-        lucide.createIcons();
-        return;
-      }
-
-      container.innerHTML = lista.map(o => {
-        let paso = 1;
-        let colorPaso = "bg-amber-400";
-        if (o.estado.includes("En Proceso") || o.estado.includes("Desarrollo")) {
-          paso = 2;
-          colorPaso = "bg-cyan-400";
-        } else if (o.estado.includes("Terminado") || o.estado.includes("Entregado")) {
-          paso = 3;
-          colorPaso = "bg-emerald-400";
-        }
-
-        return `
-          <div class="bg-slate-800/60 border border-slate-700/80 p-5 rounded-2xl shadow-lg flex flex-col gap-3">
-            <div class="flex items-center justify-between border-b border-slate-700/60 pb-3">
-              <div>
-                <span class="text-[10px] text-slate-400 font-mono block">Order ID:</span>
-                <strong class="text-base font-black text-white font-mono tracking-wider">${o.id}</strong>
-              </div>
-              <span class="px-2.5 py-1 rounded-full text-[11px] font-bold ${                 o.estado.includes('Terminado') ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' :                 o.estado.includes('En Proceso') ? 'bg-cyan-950 text-cyan-400 border border-cyan-800' :                 'bg-amber-950 text-amber-400 border border-amber-800'               }">${o.estado}</span>
-            </div>
-
-            <div class="py-1">
-              <div class="flex justify-between text-[10px] font-bold text-slate-400 mb-1.5">
-                <span class="${paso >= 1 ? 'text-amber-400' : ''}">1. Recibido</span>
-                <span class="${paso >= 2 ? 'text-cyan-400' : ''}">2. En Desarrollo</span>
-                <span class="${paso >= 3 ? 'text-emerald-400' : ''}">3. Entregado</span>
-              </div>
-              <div class="w-full bg-slate-900 h-2 rounded-full overflow-hidden p-0.5 border border-slate-700/60">
-                <div class="${colorPaso} h-full rounded-full transition-all duration-500" style="width: ${paso === 1 ? '33%' : paso === 2 ? '66%' : '100%'}"></div>
-              </div>
-            </div>
-
-            <div class="grid grid-cols-2 gap-2 text-[11px] bg-slate-900/60 p-3 rounded-xl border border-slate-800">
-              <div>
-                <span class="text-slate-500 block">Plan:</span>
-                <strong class="text-blue-400">${o.plan}</strong>
-              </div>
-              <div>
-                <span class="text-slate-500 block">Negocio:</span>
-                <strong class="text-white">${o.negocio || "N/A"}</strong>
-              </div>
-              <div>
-                <span class="text-slate-500 block">Cliente:</span>
-                <span class="text-slate-200">${o.clienteReal || o.cliente}</span>
-              </div>
-              <div>
-                <span class="text-slate-500 block">Fecha:</span>
-                <span class="text-slate-400 font-mono">${o.fecha}</span>
-              </div>
-            </div>
-
-            <a href="https://wa.me/593984511517?text=Hola%20Nexus%20Studio,%20estoy%20consultando%20el%20estado%20de%20mi%20orden%20${o.id}" target="_blank" class="w-full py-2 bg-slate-900 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl text-center text-xs font-semibold border border-slate-700 transition flex items-center justify-center gap-1.5">
-              <i data-lucide="message-circle" class="w-3.5 h-3.5 text-emerald-400"></i>
-              <span>Consultar avance en WhatsApp</span>
-            </a>
-          </div>
-        `;
-      }).join('');
-      lucide.createIcons();
-    }
-
-    function buscarOrdenManual(e) {
-      e.preventDefault();
-      const val = document.getElementById('track-manual-input').value.trim();
-      renderMisPedidos(val);
-    }
-
-    // Carrito
-    let cart = JSON.parse(localStorage.getItem('nexus_cart')) || [];
-
-    function actualizarBadgeCarrito() {
-      const badge = document.getElementById('cart-badge');
-      if (cart.length > 0) {
-        badge.innerText = cart.length;
-        badge.classList.remove('hidden');
-      } else {
-        badge.classList.add('hidden');
-      }
-    }
-    actualizarBadgeCarrito();
-
-    function abrirCarritoModal() {
-      renderCartItems();
-      document.getElementById('cart-modal').classList.remove('hidden');
-    }
-    function cerrarCarritoModal() {
-      document.getElementById('cart-modal').classList.add('hidden');
-    }
-
-    function agregarAlCarrito(nombre, precio) {
-      cart.push({ id: Date.now(), nombre, precio });
-      localStorage.setItem('nexus_cart', JSON.stringify(cart));
-      actualizarBadgeCarrito();
-      alert(`¡${nombre} añadido a tu carrito!`);
-    }
-
-    function removerDelCarrito(id) {
-      cart = cart.filter(item => item.id !== id);
-      localStorage.setItem('nexus_cart', JSON.stringify(cart));
-      actualizarBadgeCarrito();
-      renderCartItems();
-    }
-
-    function vaciarCarrito() {
-      cart = [];
-      localStorage.removeItem('nexus_cart');
-      actualizarBadgeCarrito();
-      renderCartItems();
-    }
-
-    function renderCartItems() {
-      const container = document.getElementById('cart-items-container');
-      const totalEl = document.getElementById('cart-total-price');
-      const btnCheckout = document.getElementById('btn-checkout-cart');
-
-      if (cart.length === 0) {
-        container.innerHTML = `<p class="text-slate-500 text-xs py-4 text-center">Tu carrito está vacío.</p>`;
-        totalEl.innerText = "$0 USD";
-        btnCheckout.disabled = true;
-        btnCheckout.classList.add('opacity-50');
-        return;
-      }
-
-      btnCheckout.disabled = false;
-      btnCheckout.classList.remove('opacity-50');
-
-      let total = 0;
-      container.innerHTML = cart.map(item => {
-        total += item.precio;
-        return `
-          <div class="bg-slate-800/80 border border-slate-700 p-3 rounded-xl flex items-center justify-between text-xs">
-            <div>
-              <span class="font-bold text-white">${item.nombre}</span>               <p class="text-blue-400 font-semibold">$${item.precio} USD</p>
-            </div>
-            <button onclick="removerDelCarrito(${item.id})" class="text-slate-400 hover:text-rose-400 p-1">
-              <i data-lucide="trash-2" class="w-4 h-4"></i>
-            </button>
-          </div>
-        `;
-      }).join('');
-
-      totalEl.innerText = `$${total} USD`;
-      lucide.createIcons();
-    }
-
-    function comprarDirecto(plan, precio) {
-      document.getElementById('order-plan').value = `${plan} -$${precio} USD`;
-      document.getElementById('checkout-modal').classList.remove('hidden');
-    }
-
-    function iniciarCheckoutDesdeCarrito() {
-      if (cart.length === 0) return;
-      const nombres = cart.map(c => c.nombre).join(' + ');
-      const total = cart.reduce((acc, curr) => acc + curr.precio, 0);
-      document.getElementById('order-plan').value = `${nombres} (Total:$${total} USD)`;
-      cerrarCarritoModal();
-      document.getElementById('checkout-modal').classList.remove('hidden');
-    }
-
-    // Slider
-    const sliderData = [
-      {
-        titulo: { es: "Barberías & Spas Deluxe", en: "Deluxe Barbershops & Spas", pt: "Barbearias & Spas Deluxe" },
-        categoria: { es: "Servicios", en: "Services", pt: "Serviços" },
-        descripcion: {
-          es: "Diseño elegante con catálogo de cortes, precios claros, horarios y botón para agendar citas directamente por WhatsApp.",
-          en: "Sleek layout with cut catalog, transparent pricing, schedules, and instant WhatsApp booking.",
-          pt: "Design elegante com catálogo de cortes, preços claros, horários e botão para agendar pelo WhatsApp."
-        },
-        imagen: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=800&q=80",
-        plan: "Barberías & Spas (Plan Pro)",
-        precio: 65
-      },
-      {
-        titulo: { es: "Pizzerías & Burgers Express", en: "Express Pizza & Burgers", pt: "Pizzarias & Burgers Express" },
-        categoria: { es: "Comida Rápida", en: "Fast Food", pt: "Fast Food" },
-        descripcion: {
-          es: "Menú interactivo con fotos llamativas, promociones del día y recepción de pedidos directo al WhatsApp de cocina.",
-          en: "Interactive mouth-watering menu, daily deals, and direct kitchen WhatsApp order routing.",
-          pt: "Cardápio interativo com fotos atrativas, promoções e pedidos diretos para a cozinha via WhatsApp."
-        },
-        imagen: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80",
-        plan: "Restaurantes & Comida (Plan Pro)",
-        precio: 65
-      },
-      {
-        titulo: { es: "Boutiques & Calzado Urbano", en: "Urban Boutiques & Footwear", pt: "Boutiques & Calçados Urbanos" },
-        categoria: { es: "E-Commerce", en: "E-Commerce", pt: "E-Commerce" },
-        descripcion: {
-          es: "Exhibición de colecciones de temporada, tallas y botón de compra directa sin procesos complicados de registro.",
-          en: "Showcase seasonal drops, available sizes, and one-tap checkout without tedious signups.",
-          pt: "Apresentação de coleções, tamanhos e botão de compra direta sem cadastros chatos."
-        },
-        imagen: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80",
-        plan: "Boutique & Ropa (Plan Pro)",
-        precio: 65
-      },
-      {
-        titulo: { es: "Talleres Mecánicos & Repuestos", en: "Auto Repair & Spare Parts", pt: "Oficinas Mecânicas & Peças" },
-        categoria: { es: "Automotriz", en: "Automotive", pt: "Automotivo" },
-        descripcion: {
-          es: "Cotizador rápido de servicios de mantenimiento, cambio de repuestos, horario de atención y botón de grúa urgente.",
-          en: "Fast quote tool for maintenance, spare parts, business hours, and emergency roadside towing button.",
-          pt: "Orçamento rápido de manutenção, troca de peças, horários e botão para reboque de emergência."
-        },
-        imagen: "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=800&q=80",
-        plan: "Taller Mecánico (Plan Starter)",
-        precio: 35
-      },
-      {
-        titulo: { es: "Gimnasios & Entrenadores Personales", en: "Gyms & Personal Trainers", pt: "Academias & Personal Trainers" },
-        categoria: { es: "Fitness", en: "Fitness", pt: "Fitness" },
-        descripcion: {
-          es: "Presentación de planes mensuales, promociones, rutinas y botón para inscripción inmediata de alumnos.",
-          en: "Highlight membership plans, deals, training routines, and frictionless member enrollments.",
-          pt: "Planos mensais, promoções, rotinas e inscrição rápida para novos alunos."
-        },
-        imagen: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80",
-        plan: "Gimnasios & Fitness (Plan Pro)",
-        precio: 65
-      },
-      {
-        titulo: { es: "Cafeterías & Pastelería Artesanal", en: "Artisan Cafes & Bakeries", pt: "Cafeterias & Confeitaria Artesanal" },
-        categoria: { es: "Repostería", en: "Bakery", pt: "Confeitaria" },
-        descripcion: {
-          es: "Carta dulce con fotos de postres, tortas personalizadas para eventos y pedidos agendados para entrega a domicilio.",
-          en: "Sweet dessert menu, custom celebration cakes, and scheduled delivery orders directly on WhatsApp.",
-          pt: "Cardápio com fotos de sobremesas, bolos personalizados para festas e encomendas para entrega."
-        },
-        imagen: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80",
-        plan: "Cafetería & Pasteles (Plan Starter)",
-        precio: 35
-      }
-    ];
-
-    let sliderIndex = 0;
-
-    function renderSlider() {
-      const item = sliderData[sliderIndex];
-      const card = document.getElementById('slider-card');
-      card.classList.remove('animate-slideCard');
-      void card.offsetWidth;
-      card.classList.add('animate-slideCard');
-
-      document.getElementById('slider-img').src = item.imagen;
-      document.getElementById('slider-badge').innerText = item.categoria[currentLang] || item.categoria.es;
-      document.getElementById('slider-title').innerText = item.titulo[currentLang] || item.titulo.es;
-      document.getElementById('slider-desc').innerText = item.descripcion[currentLang] || item.descripcion.es;
-      document.getElementById('slider-count').innerText = `${sliderIndex + 1} /${sliderData.length}`;
-      
-      const btn = document.getElementById('slider-btn');
-      btn.onclick = () => comprarDirecto(item.plan, item.precio);
-    }
-
-    function moverSlider(direccion) {
-      sliderIndex += direccion;
-      if (sliderIndex < 0) sliderIndex = sliderData.length - 1;
-      if (sliderIndex >= sliderData.length) sliderIndex = 0;
-      renderSlider();
-    }
-
-    // Reviews
-    const DEFAULT_REVIEWS = [
-      { text: "Me entregaron la web para mi local de comida en 24h. Los clientes ahora piden directo al WhatsApp.", tag: "Cliente Verificado • Plan Pro", date: "Oct 04, 2026", stars: 5 },
-      { text: "Excelente servicio y paciencia para enseñarme a usar el catálogo. Súper recomendado Nexus Studio.", tag: "Cliente Verificado • Plan Starter", date: "Oct 03, 2026", stars: 5 },
-      { text: "El sistema de notificaciones a Discord es lo mejor. Todo ordenado y rápido.", tag: "Cliente Verificado • Plan Élite", date: "Oct 02, 2026", stars: 5 }
-    ];
-
-    let reviews = JSON.parse(localStorage.getItem('nexus_clean_reviews')) || DEFAULT_REVIEWS;
-
-    function renderReviews() {
-      const grid = document.getElementById('reviews-grid');
-      grid.innerHTML = reviews.map(r => `
-        <div class="bg-[#0f1422]/90 border border-slate-800 p-5 rounded-2xl flex flex-col justify-between hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-500/10 transition duration-200 group">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <div class="flex gap-1 text-amber-400 text-sm">${'★'.repeat(r.stars)}</div>
-              <span class="text-[11px] text-slate-400 font-mono">${r.date}</span>
-            </div>
-            <p class="text-xs text-slate-200 font-sans mb-4 leading-relaxed">${r.text}</p>
-          </div>
-          <div class="text-[10px] text-blue-400 font-mono tracking-wider flex items-center gap-1.5 pt-2 border-t border-slate-800/80">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-            <span>${r.tag}</span>
-          </div>
-        </div>
-      `).join('');
-    }
-    renderReviews();
-
-    function abrirReviewModal() {
-      document.getElementById('review-modal').classList.remove('hidden');
-    }
-    function cerrarReviewModal() {
-      document.getElementById('review-modal').classList.add('hidden');
-    }
-
-    async function guardarReviewPublica(e) {
-      e.preventDefault();
-      const btn = document.getElementById('btn-submit-review');
-      btn.innerText = "Publicando...";
-      btn.disabled = true;
-
-      const nombre = document.getElementById('public-review-name').value;
-      const tag = document.getElementById('public-review-tag').value;
-      const stars = parseInt(document.getElementById('public-review-stars').value);
-      const text = document.getElementById('public-review-text').value;
-
-      const nuevaReview = {
-        text: `"${text}" - ${nombre}`,
-        tag: tag,
-        date: "Oct 04, 2026",
-        stars: stars
-      };
-
-      reviews.unshift(nuevaReview);
-      localStorage.setItem('nexus_clean_reviews', JSON.stringify(reviews));
-      renderReviews();
-
-      fetch(webhookReviews, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          username: "Nexus Reviews Bot",
-          avatar_url: NEXUS_AVATAR,
-          embeds: [{
-            title: "⭐ ¡NUEVA RESEÑA PUBLICADA!",
-            color: 0xf59e0b,
-            description: `**${nombre}** calificó con **${'★'.repeat(stars)}**`,
-            fields: [
-              { name: "💬 Comentario", value: text },
-              { name: "🏷️ Servicio", value: tag, inline: true }
-            ],
-            footer: { text: "Nexus Studio • Reviews Oficiales" }
-          }]
-        })
-      }).catch(err => console.error(err));
-
-      alert("¡Gracias por tu opinión! Ya ha sido publicada en la página y enviada a Discord.");
-      btn.innerText = "Publicar Opinión y Notificar a Discord";
-      btn.disabled = false;
-      cerrarReviewModal();
-      document.getElementById('public-review-name').value = '';
-      document.getElementById('public-review-text').value = '';
-    }
-
-    // Checkout
-    function cerrarCheckoutModal() {
-      document.getElementById('checkout-modal').classList.add('hidden');
-    }
-
-    async function enviarOrdenDiscord(e) {
-      e.preventDefault();
-      const submitBtn = document.getElementById('order-submit-btn');
-      submitBtn.innerHTML = `<span>Enviando al instante...</span>`;
-      submitBtn.disabled = true;
-
-      const plan = document.getElementById('order-plan').value;
-      const clienteReal = document.getElementById('order-realname').value;
-      const negocio = document.getElementById('order-businessname').value;
-      const telefono = document.getElementById('order-phone').value;
-      const discordUser = document.getElementById('order-discord').value || "No especificado";
-      const notas = document.getElementById('order-notes').value || "Sin notas adicionales";
-      const fecha = new Date().toLocaleString();
-
-      const nuevoPedido = {
-        id: "ORD-" + Math.floor(1000 + Math.random() * 9000),
-        plan,
-        clienteReal,
-        negocio,
-        telefono,
-        discordUser,
-        notas,
-        fecha,
-        estado: "🟡 Recibido"
-      };
-
-      orders.unshift(nuevoPedido);
-      localStorage.setItem('nexus_orders', JSON.stringify(orders));
-
-      cart = [];
-      localStorage.removeItem('nexus_cart');
-      actualizarBadgeCarrito();
-
-      fetch(webhookOrders, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          username: "Nexus Studio Bot",
-          avatar_url: NEXUS_AVATAR,
-          embeds: [{
-            title: "🚨 ¡NUEVA ORDEN RECIBIDA!",
-            color: 0x3b82f6,
-            description: `Se ha registrado una nueva orden en la web.`,
-            fields: [
-              { name: "📦 Paquete Solicitado", value: `**${plan}**`, inline: true },
-              { name: "👤 Cliente Real", value: clienteReal, inline: true },
-              { name: "🏢 Negocio / Marca", value: negocio, inline: true },
-              { name: "📱 WhatsApp", value: telefono, inline: true },
-              { name: "🎮 Discord", value: discordUser, inline: true },
-              { name: "🆔 Código Orden (Order ID)", value: `\`${nuevoPedido.id}\``, inline: true },
-              { name: "📌 Estado Inicial", value: "🟡 Recibido", inline: true },
-              { name: "📝 Notas / Detalles", value: notas }
-            ],
-            footer: { text: `Nexus Studio Automations • ${fecha}` }
-          }],
-          components: [
-            {
-              type: 1,
-              components: [
-                {
-                  type: 2,
-                  label: "Abrir WhatsApp del Cliente",
-                  style: 5,
-                  url: `https://wa.me/${telefono.replace(/[^0-9]/g, '')}`
-                },
-                {
-                  type: 2,
-                  label: "Rastrear en la Web",
-                  style: 5,
-                  url: window.location.href
-                }
-              ]
-            }
-          ]
-        })
-      }).catch(err => console.error("Error enviando webhook:", err));
-
-      alert(`¡Orden ${nuevoPedido.id} registrada con éxito! Tu Order ID es: ${nuevoPedido.id}. Puedes ver el avance en "Mis Pedidos".`);
-      const mensajeWA = encodeURIComponent(`Hola Nexus Studio, acabo de registrar la orden ${nuevoPedido.id} para ${negocio} (${plan}). Mi nombre es ${clienteReal}.`);
-      window.open(`https://wa.me/593984511517?text=${mensajeWA}`, '_blank');
-
-      submitBtn.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4"></i><span>Confirmar y Enviar Pedido a Discord</span>`;
-      submitBtn.disabled = false;
-      cerrarCheckoutModal();
-      document.getElementById('order-form').reset();
-      lucide.createIcons();
-    }
-
-    // Panel Admin
-    function abrirAdminModal() {
-      document.getElementById('admin-modal').classList.remove('hidden');
-    }
-    function cerrarAdminModal() {
-      document.getElementById('admin-modal').classList.add('hidden');
-    }
-
-    function verificarAdminPassword(e) {
-      e.preventDefault();
-      const pass = document.getElementById('admin-pass-input').value;
-      if (pass === ADMIN_PASS) {
-        document.getElementById('admin-auth-screen').classList.add('hidden');
-        document.getElementById('admin-dashboard-screen').classList.remove('hidden');
-        document.getElementById('admin-webhook-orders').value = webhookOrders;
-        document.getElementById('admin-webhook-reviews').value = webhookReviews;
-        renderAdminOrders();
-      } else {
-        document.getElementById('admin-error-msg').classList.remove('hidden');
-      }
-    }
-
-    function cerrarSesionAdmin() {
-      document.getElementById('admin-auth-screen').classList.remove('hidden');
-      document.getElementById('admin-dashboard-screen').classList.add('hidden');
-      document.getElementById('admin-pass-input').value = "";
-    }
-
-    function renderAdminOrders() {
-      const container = document.getElementById('admin-orders-list');
-      if (orders.length === 0) {
-        container.innerHTML = `<p class="text-slate-500 py-3">Aún no hay órdenes registradas.</p>`;
-        return;
-      }
-      container.innerHTML = orders.map((o, idx) => `
-        <div class="bg-slate-900 border border-slate-700/80 p-4 rounded-2xl flex flex-col gap-3">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-2">
-            <div class="flex items-center gap-2">
-              <span class="font-bold text-white font-mono bg-slate-800 px-2 py-0.5 rounded text-xs">${o.id}</span>
-              <span class="text-blue-400 font-semibold text-xs">${o.plan}</span>
-            </div>
-            <div class="flex items-center gap-2">
-              <span class="text-[11px] text-slate-400">Estado en vivo:</span>
-              <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold ${
-                o.estado.includes('Terminado') ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' :
-                o.estado.includes('En Proceso') ? 'bg-cyan-950 text-cyan-400 border border-cyan-800' :
-                'bg-amber-950 text-amber-400 border border-amber-800'
-              }">${o.estado}</span>
-            </div>
-          </div>
-          
-          <p class="text-slate-300 text-xs">
-            <strong>Cliente:</strong> ${o.clienteReal || o.cliente} | <strong>Negocio:</strong> ${o.negocio || "N/A"} | <strong>WA:</strong> ${o.telefono} | <strong>Discord:</strong> ${o.discordUser}
-          </p>
-
-          <p class="text-slate-400 text-[11px] bg-slate-950/60 p-2 rounded-lg border border-slate-800/80">
-            <strong>Detalles:</strong> ${o.notas}
-          </p>
-
-          <div class="flex flex-wrap items-center gap-2 pt-1">
-            <span class="text-[11px] text-slate-400 font-semibold">Cambiar Estado (Sincroniza con el Cliente):</span>
-            <button onclick="cambiarEstadoPedido(${idx}, '🟡 Recibido')" class="px-2.5 py-1 bg-amber-900/40 hover:bg-amber-700 text-amber-300 rounded-lg text-[10px] font-bold transition">🟡 Recibido</button>
-            <button onclick="cambiarEstadoPedido(${idx}, '🔵 En Proceso')" class="px-2.5 py-1 bg-cyan-900/40 hover:bg-cyan-700 text-cyan-300 rounded-lg text-[10px] font-bold transition">🔵 En Proceso</button>
-            <button onclick="cambiarEstadoPedido(${idx}, '🟢 Terminado')" class="px-2.5 py-1 bg-emerald-900/40 hover:bg-emerald-700 text-emerald-300 rounded-lg text-[10px] font-bold transition">🟢 Terminado</button>
-          </div>
-        </div>
-      `).join('');
-      lucide.createIcons();
-    }
-
-    async function cambiarEstadoPedido(index, nuevoEstado) {
-      orders[index].estado = nuevoEstado;
-      localStorage.setItem('nexus_orders', JSON.stringify(orders));
-      renderAdminOrders();
-
-      fetch(webhookOrders, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          username: "Nexus Studio Bot",
-          avatar_url: NEXUS_AVATAR,
-          embeds: [{
-            title: "🔔 ACTUALIZACIÓN DE ESTADO EN VIVO",
-            color: nuevoEstado.includes('Terminado') ? 0x10b981 : nuevoEstado.includes('En Proceso') ? 0x06b6d4 : 0xf59e0b,
-            description: `El estado del pedido **${orders[index].id}** ha cambiado.`,
-            fields: [
-              { name: "🏢 Negocio", value: orders[index].negocio || "N/A", inline: true },
-              { name: "👤 Cliente", value: orders[index].clienteReal || orders[index].cliente, inline: true },
-              { name: "📦 Paquete", value: orders[index].plan, inline: true },
-              { name: "📌 Nuevo Estado", value: `**${nuevoEstado}**`, inline: true }
-            ],
-            footer: { text: "Nexus Studio • Sincronización en Vivo" }
-          }],
-          components: [
-            {
-              type: 1,
-              components: [
-                {
-                  type: 2,
-                  label: "Abrir WhatsApp del Cliente",
-                  style: 5,
-                  url: `https://wa.me/${orders[index].telefono.replace(/[^0-9]/g, '')}`
-                }
-              ]
-            }
-          ]
-        })
-      }).catch(e => console.error(e));
-    }
-
-    // Bot Soporte
-    const soporteBtn = document.getElementById('soporte-toggle-btn');
-    const soporteModal = document.getElementById('soporte-modal');
-    const soporteClose = document.getElementById('soporte-close-btn');
-
-    soporteBtn.addEventListener('click', () => {
-      soporteModal.classList.toggle('hidden');
-      soporteBtn.classList.remove('animate-bounce');
-    });
-    soporteClose.addEventListener('click', () => soporteModal.classList.add('hidden'));
-
-    const botRespuestasI18n = {
-      es: {
-        tiempo: "¡Super rápido! Las páginas se entregan en **24 a 48 horas** una vez recibidas tus fotos e información básica.",
-        rastreo: "Puedes tocar el botón **'Mis Pedidos'** (al lado del carrito en la barra superior) para ver tu Order ID y si tu web está en desarrollo o lista.",
-        pagos: "Aceptamos transferencias bancarias a **Banco Pichincha** y **Banco Guayaquil**, o criptomonedas (**LTC** / **USDT**). No manejamos efectivo. Trabajamos con **50% de anticipo** para iniciar y 50% al entregar la web lista."
-      },
-      en: {
-        tiempo: "Super fast! Websites are delivered within **24 to 48 hours** once your assets and business details are received.",
-        rastreo: "Click the **'My Orders'** button in the top bar to track your Order ID and see real-time progress.",
-        pagos: "We accept bank transfers (Banco Pichincha, Guayaquil) and cryptocurrencies (**LTC** / **USDT**). 50% upfront to start and 50% upon final delivery."
-      },
-      pt: {
-        tiempo: "Super rápido! Os sites são entregues em **24 a 48 horas** após o envio das suas fotos e informações básicas.",
-        rastreo: "Você pode clicar em **'Meus Pedidos'** no topo para acompanhar seu Order ID e ver o progresso em tempo real.",
-        pagos: "Aceitamos transferências bancárias e criptomoedas (**LTC** / **USDT**). 50% de entrada para iniciar e 50% na entrega final."
-      }
-    };
-
-    function enviarMensajeUsuario(tipo) {
-      const chatMessages = document.getElementById('chat-messages');
-      const timeNow = new Date().getHours().toString().padStart(2, '0') + ':' + new Date().getMinutes().toString().padStart(2, '0');
-
-      let textoPregunta = "";
-      if (tipo === 'tiempo') textoPregunta = currentLang === 'en' ? "⏱ What is the delivery time?" : currentLang === 'pt' ? "⏱ Qual o prazo de entrega?" : "⏱ ¿En cuánto tiempo entregan?";
-      if (tipo === 'rastreo') textoPregunta = currentLang === 'en' ? "🔍 How can I track my order?" : currentLang === 'pt' ? "🔍 Como rastrear meu pedido?" : "🔍 ¿Cómo rastreo mi pedido?";
-      if (tipo === 'pagos') textoPregunta = currentLang === 'en' ? "💳 What payment methods are accepted?" : currentLang === 'pt' ? "💳 Quais são as formas de pagamento?" : "💳 ¿Cómo son los métodos de pago?";
-
-      const userBubble = document.createElement('div');
-      userBubble.className = 'flex flex-col items-end gap-1 max-w-[85%] self-end animate-bounce-chat';
-      userBubble.innerHTML = `
-        <div class="bg-blue-600 text-white p-3 rounded-2xl rounded-tr-none font-medium shadow-md">${textoPregunta}</div>
-        <span class="text-[10px] text-slate-500 mr-1">${timeNow}</span>
-      `;
-      chatMessages.appendChild(userBubble);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-
-      const opciones = document.getElementById('opciones-container');
-      opciones.classList.add('hidden');
-
-      const typingIndicator = document.createElement('div');
-      typingIndicator.id = 'typing-indicator';
-      typingIndicator.className = 'flex items-center gap-1.5 p-3 bg-slate-800/80 rounded-2xl rounded-tl-none border border-slate-700/60 w-16 animate-pulse';
-      typingIndicator.innerHTML = `
-        <span class="w-1.5 h-1.5 bg-blue-400 rounded-full animate-bounce"></span>
-        <span class="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-bounce [animation-delay:0.2s]"></span>
-        <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-bounce [animation-delay:0.4s]"></span>
-      `;
-      chatMessages.appendChild(typingIndicator);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-
-      setTimeout(() => {
-        typingIndicator.remove();
-        const rDic = botRespuestasI18n[currentLang] || botRespuestasI18n.es;
-        const botBubble = document.createElement('div');
-        botBubble.className = 'flex flex-col items-start gap-1 max-w-[85%] animate-bounce-chat';
-        botBubble.innerHTML = `
-          <div class="bg-slate-800/90 p-3.5 rounded-2xl rounded-tl-none border border-slate-700/60 text-slate-200 leading-relaxed shadow-sm">
-            ${rDic[tipo]}
-          </div>
-          <span class="text-[10px] text-slate-500 ml-1">${timeNow}</span>
-        `;
-        chatMessages.appendChild(botBubble);
-        opciones.classList.remove('hidden');
-        chatMessages.appendChild(opciones);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-      }, 400);
-    }
-
-    // Inicializar idioma
-    aplicarTraduccion(currentLang);
-  </script>
 </body>
 </html>
